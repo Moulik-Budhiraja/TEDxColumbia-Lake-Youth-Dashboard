@@ -9,3 +9,73 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id          String @id @default(uuid())
+  firstName   String
+  lastName    String
+  email       String @unique
+  affiliation String
+
+  roleId String
+  role   Role   @relation(fields: [roleId], references: [id])
+
+  qrId String? @unique
+  qr   Qr?     @relation(fields: [qrId], references: [id])
+
+  auth Auth?
+
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
+}
+
+model Role {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+
+  permisisonsId String
+  permisisons   Permisisons @relation(fields: [permisisonsId], references: [id])
+
+  user User[]
+
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
+}
+
+model Permisisons {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+
+  scanQr Boolean @default(true)
+
+  admin      Boolean @default(false)
+  manageQr   Boolean @default(false)
+  validateQr Boolean @default(false)
+
+  role Role[]
+
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
+}
+
+model Qr {
+  id String @id @default(uuid())
+
+  user User?
+
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
+}
+
+model Auth {
+  id           String @id @default(uuid())
+  passwordHash String @db.VarChar(255)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  userId String @unique
+
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
+}

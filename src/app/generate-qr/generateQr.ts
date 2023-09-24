@@ -14,7 +14,7 @@ export async function generateQr() {
   const qr = await QRCode.toDataURL("URL:" + url.toString(), {
     errorCorrectionLevel: "M",
     type: "image/png",
-    scale: 10,
+    scale: 30,
   });
 
   return {

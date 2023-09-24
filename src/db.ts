@@ -13,3 +13,19 @@ export const prisma =
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
 }
+
+prisma.$extends({
+  result: {
+    user: {
+      fullName: {
+        needs: {
+          firstName: true,
+          lastName: true,
+        },
+        compute(user) {
+          return `${user.firstName} ${user.lastName}`;
+        },
+      },
+    },
+  },
+});

@@ -15,11 +15,11 @@ services:
     volumes:
       - ${VOLUME_PATH}:/var/lib/mysql
 
-  portfolio-site:
+  dashboard:
     build:
       context: .
       dockerfile: Dockerfile
-    image: portfolio-site:1.1.2
+    image: portfolio-site:0.0.1
     ports:
       - "9842:3000"
     environment:

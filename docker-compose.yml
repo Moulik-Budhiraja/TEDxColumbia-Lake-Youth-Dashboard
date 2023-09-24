@@ -19,8 +19,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: portfolio-site:0.0.1
-    ports:
+    image: ${DOCKER_USER}/dashboard:0.0.2
+    ports: 
       - "9842:3000"
     environment:
       - MYSQL_HOST=database

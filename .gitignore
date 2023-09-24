@@ -12,6 +12,7 @@
 /.next/
 
 .db
+db
 /out/
 
 # production

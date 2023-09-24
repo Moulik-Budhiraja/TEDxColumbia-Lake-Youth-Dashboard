@@ -1,4 +1,5 @@
 import Header from "@/components/Header/Header";
+import { prisma } from "@/db";
 import { Jwt } from "@/types/jwtTypes";
 import jwt from "jsonwebtoken";
 
@@ -8,7 +9,7 @@ type QrProps = {
   };
 };
 
-export default function Qr({ searchParams }: QrProps) {
+export default async function Qr({ searchParams }: QrProps) {
   const state = {
     valid: true,
     id: "",

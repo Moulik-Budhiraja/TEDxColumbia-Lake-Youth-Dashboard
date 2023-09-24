@@ -1,10 +1,10 @@
 import { getUser } from "@/serverFunctions/user/getUser";
-import { User } from "@prisma/client";
+import { UserWithRole } from "@/types/morePrismaTypes";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export function useUser() {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<UserWithRole>();
   const { data: session, status } = useSession();
 
   useEffect(() => {

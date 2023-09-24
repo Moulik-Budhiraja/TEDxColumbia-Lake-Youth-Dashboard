@@ -22,7 +22,7 @@ export default function RootLayout({
         <Providers>
           <main className="flex">
             <Sidebar />
-            <section className="pl-16 w-full">
+            <section className="pl-16 w-full overflow-x-hidden">
               <div className="w-full">{children}</div>
             </section>
             {/* Yes that margin is scuffed */}

@@ -13,6 +13,9 @@ type Props = {
 };
 
 export default async function SetupAccount({ searchParams }: Props) {
+  const sessionUser = await getSessionUser();
+  if (sessionUser) return redirect("/");
+
   let decoded: NewAccountJwt;
 
   try {

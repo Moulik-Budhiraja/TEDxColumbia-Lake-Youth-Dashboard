@@ -81,7 +81,11 @@ export default async function Networking() {
                   )}
                 </td>
                 <td className="border px-4 py-2">
-                  {!!user.rsvp ? "TRUE" : "FALSE"}
+                  {user.rsvp == null
+                    ? "UNKNOWN"
+                    : user.rsvp?.attending
+                    ? "TRUE"
+                    : "FALSE"}
                 </td>
                 <td className="border px-4 py-2">
                   {!!user.rsvp?.dateOfBirth &&

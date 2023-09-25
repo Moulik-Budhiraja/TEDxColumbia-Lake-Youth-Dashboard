@@ -13,7 +13,7 @@ export default function Rsvp({ user }: Props) {
     <div className="m-2 p-2 rounded-md border border-slate-400 max-w-lg">
       <h2 className="text-2xl">RSVP</h2>
       <p className="mb-2">
-        Please RSVP by _ to let us know that you'll be there.
+        Please RSVP by _ to let us know that you&apos;ll be there.
       </p>
       <p>
         <span className="font-bold">Current Status: </span>{" "}

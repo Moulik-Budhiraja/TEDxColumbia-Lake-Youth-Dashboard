@@ -69,7 +69,9 @@ export default function RsvpForm() {
               required={true}
             >
               {menuOptions.map((option) => (
-                <option value={option.name}>{option.name}</option>
+                <option value={option.name} key={option.name}>
+                  {option.name}
+                </option>
               ))}
             </select>
             <Menu></Menu>

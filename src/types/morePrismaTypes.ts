@@ -9,3 +9,14 @@ export type UserWithRole = Prisma.UserGetPayload<{
     };
   };
 }>;
+
+export type UserWithRsvp = Prisma.UserGetPayload<{
+  include: {
+    rsvp: true;
+    role: {
+      include: {
+        permissions: true;
+      };
+    };
+  };
+}>;

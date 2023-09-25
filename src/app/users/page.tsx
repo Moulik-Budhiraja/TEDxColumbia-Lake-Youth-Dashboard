@@ -12,6 +12,7 @@ export default async function Networking() {
         },
       },
       auth: true,
+      rsvp: true,
     },
     orderBy: [
       {
@@ -28,6 +29,7 @@ export default async function Networking() {
       {
         id: user.id,
         role: user.role.name,
+        iat: Date.now(),
       },
       process.env.NEXTAUTH_SECRET as string
     );
@@ -52,6 +54,12 @@ export default async function Networking() {
               <th className="px-4 py-2">Role</th>
               <th className="px-4 py-2">Account Setup</th>
               <th className="px-4 py-2">Setup</th>
+              <th className="px-4 py-2">Attending</th>
+              <th className="px-4 py-2">Date of Birth</th>
+              <th className="px-4 py-2">Phone Number</th>
+              <th className="px-4 py-2">Meal Preference</th>
+              <th className="px-4 py-2">Dietary Restrictions</th>
+              <th className="px-4 py-2">Waiver</th>
             </tr>
           </thead>
           <tbody>
@@ -70,6 +78,38 @@ export default async function Networking() {
                 <td className="border px-4 py-2">
                   {!user.auth && (
                     <CopySetupURL url={getSetupURL(user)}></CopySetupURL>
+                  )}
+                </td>
+                <td className="border px-4 py-2">
+                  {!!user.rsvp ? "TRUE" : "FALSE"}
+                </td>
+                <td className="border px-4 py-2">
+                  {!!user.rsvp?.dateOfBirth &&
+                    user.rsvp.dateOfBirth.toLocaleDateString("en-us", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                </td>
+                <td className="border px-4 py-2">
+                  {!!user?.rsvp?.phoneNumber && user.rsvp.phoneNumber}
+                </td>
+                <td className="border px-4 py-2">
+                  {!!user?.rsvp?.mealPreference && user.rsvp.mealPreference}
+                </td>
+                <td className="border px-4 py-2">
+                  {!!user?.rsvp?.dietaryRestrictions &&
+                    user.rsvp.dietaryRestrictions}
+                </td>
+                <td className="border px-4 py-2">
+                  {!!user?.rsvp?.waiverName && (
+                    <a
+                      href={`/api/waiver/${user.id}`}
+                      className="text-sky-600 underline hover:text-sky-400 transition-all duration-300 ease-out"
+                      target="_blank"
+                    >
+                      Signed
+                    </a>
                   )}
                 </td>
               </tr>

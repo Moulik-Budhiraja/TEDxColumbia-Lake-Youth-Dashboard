@@ -41,7 +41,7 @@ export default function Input({
     <div className={`relative ${className || ""}`}>
       <input
         type={type}
-        className={`w-full py-3 px-5 font-sans bg-slate-50 border border-slate-400 rounded-md outline-none focus:border-slate-950 transition-all duration-300 ease-out peer ${
+        className={`w-full p-2 font-sans bg-slate-50 border border-slate-400 rounded-md outline-none focus:border-slate-950 transition-all duration-300 ease-out peer ${
           disabled && "text-slate-500"
         }`}
         name={name}
@@ -63,12 +63,12 @@ export default function Input({
       />
 
       <span
-        className={`absolute font-display my-3 bg-slate-50  pointer-events-none transition-all duration-300 ease-in-out peer-focus:mx-2 peer-focus:px-3 peer-focus:left-1 peer-focus:-top-6 peer-focus:tracking-widest peer-focus:border-x peer-focus:border-x-slate-950 ${
+        className={`absolute font-display my-2 bg-slate-50  pointer-events-none transition-all duration-300 ease-in-out peer-focus:mx-2 peer-focus:px-2 peer-focus:left-1 peer-focus:-top-6 peer-focus:tracking-widest peer-focus:border-x peer-focus:border-x-slate-950 ${
           value !== "" || disabled
-            ? `mx-2 px-3 left-1 -top-6 tracking-widest border-x  border-x-slate-400 ${
+            ? `mx-2 px-2 left-1 -top-6 tracking-widest border-x  border-x-slate-400 ${
                 disabled ? "text-slate-600" : "text-slate-950"
               }`
-            : "mx-3 px-2 left-0 top-0 border-x-slate-850"
+            : "mx-2 px-2 left-0 top-0 border-x-slate-850"
         } peer-focus:border-x-slate-400`}
       >
         {placeholder}

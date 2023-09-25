@@ -36,7 +36,7 @@ export default function Button({
 
   return (
     <button
-      className={`px-2 py-3 border  rounded-md outline-none hocus:bg-slate-700  hocus:tracking-widest transition-all duration-300 ease-out ${
+      className={`p-2 border  rounded-md outline-none hocus:bg-slate-700  hocus:tracking-widest transition-all duration-300 ease-out ${
         stateStyles[style]
       } ${className || ""}`}
       onClick={() => {

@@ -96,7 +96,13 @@ export default function Sidebar() {
               }}
             >
               {user ? (
-                <div className="p-2 bg-green-300 rounded-full flex justify-center items-center w-10 aspect-square">
+                <div
+                  className={`p-2 rounded-full flex justify-center items-center w-10 aspect-square ${
+                    (user.role.name === "attendee" && "bg-green-300") ||
+                    (user.role.name === "speaker" && "bg-red-300") ||
+                    (user.role.name === "admin" && "bg-blue-300")
+                  }`}
+                >
                   <span className="text-slate-950">
                     {user.firstName.at(0)?.toUpperCase()}
                     {user.lastName.at(0)?.toUpperCase()}

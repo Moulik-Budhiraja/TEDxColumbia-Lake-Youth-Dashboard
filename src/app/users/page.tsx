@@ -3,7 +3,9 @@ import { prisma } from "@/db";
 import jwt from "jsonwebtoken";
 import CopySetupURL from "./CopySetupURL";
 
-export default async function Networking() {
+export const dynamic = "force-dynamic";
+
+export default async function Users() {
   const users = await prisma.user.findMany({
     include: {
       role: {
@@ -23,6 +25,20 @@ export default async function Networking() {
       },
     ],
   });
+
+  // const user = await prisma.user.create({
+  //   data: {
+  //     firstName: "No",
+  //     lastName: "Bitches",
+  //     email: "nobitches@all.ever",
+  //     affiliation: "To no bitches",
+  //     role: {
+  //       connect: {
+  //         name: "attendee",
+  //       },
+  //     },
+  //   },
+  // });
 
   const getSetupURL = (user: (typeof users)[0]) => {
     const token = jwt.sign(

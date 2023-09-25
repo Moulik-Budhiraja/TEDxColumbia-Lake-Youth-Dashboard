@@ -1,7 +1,6 @@
 dist
 node_modules
 .db
-*.env
 images/full/*
 images/small/*
 images/temp/*

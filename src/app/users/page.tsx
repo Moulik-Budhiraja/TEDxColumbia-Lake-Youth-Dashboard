@@ -26,20 +26,6 @@ export default async function Users() {
     ],
   });
 
-  // const user = await prisma.user.create({
-  //   data: {
-  //     firstName: "No",
-  //     lastName: "Bitches",
-  //     email: "nobitches@all.ever",
-  //     affiliation: "To no bitches",
-  //     role: {
-  //       connect: {
-  //         name: "attendee",
-  //       },
-  //     },
-  //   },
-  // });
-
   const getSetupURL = (user: (typeof users)[0]) => {
     const token = jwt.sign(
       {

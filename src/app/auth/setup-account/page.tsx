@@ -24,6 +24,7 @@ export default async function SetupAccount({ searchParams }: Props) {
       process.env.NEXTAUTH_SECRET as string
     ) as NewAccountJwt;
   } catch {
+    console.log("Invalid token");
     return redirect("/");
   }
 
@@ -33,7 +34,10 @@ export default async function SetupAccount({ searchParams }: Props) {
     include_auth: true,
   });
 
-  if (!user) return redirect("/");
+  if (!user) {
+    console.log("User not found");
+    return redirect("/");
+  }
   if (user.auth) {
     return redirect("/auth/login");
   }

@@ -3,6 +3,7 @@
 import Header from "@/components/Header/Header";
 import { generateQr } from "./generateQr";
 import { useEffect, useState } from "react";
+import { requirePermission } from "@/serverFunctions/user/requirePermission";
 
 export default function GenerateQR() {
   const [qr, setQr] = useState("");
@@ -23,7 +24,9 @@ export default function GenerateQR() {
   };
 
   useEffect(() => {
-    newQr();
+    requirePermission("manageQr").then(() => {
+      newQr();
+    });
   }, []);
 
   return (

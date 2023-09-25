@@ -45,7 +45,7 @@ export const options: NextAuthOptions = {
   pages: {
     signIn: "/auth/login",
     signOut: "/auth/logout",
-    newUser: "/auth/signup",
+    newUser: "/auth/setup-account",
   },
 
   secret: process.env.NEXTAUTH_SECRET,

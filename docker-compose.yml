@@ -19,12 +19,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ${DOCKER_USER}/dashboard:0.0.2
+    image: ${DOCKER_USER}/dashboard:0.0.3
     ports:
       - "9842:3000"
     environment:
       - MYSQL_HOST=database
       - DATABASE_URL=${DATABASE_URL}
+      # - DATABASE_URL="mysql://root:change-me@localhost:3306/dashboard"
       - NEXTAUTH_URL=${NEXTAUTH_URL}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
       - TZ=${TZ}

@@ -2,11 +2,23 @@ import Header from "@/components/Header/Header";
 import { prisma } from "@/db";
 import jwt from "jsonwebtoken";
 import CopySetupURL from "./CopySetupURL";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-export default async function Users() {
+type Props = {
+  searchParams: {
+    role?: string;
+  };
+};
+
+export default async function Users({ searchParams }: Props) {
   const users = await prisma.user.findMany({
+    where: {
+      role: {
+        name: searchParams.role,
+      },
+    },
     include: {
       role: {
         include: {
@@ -46,6 +58,44 @@ export default async function Users() {
       {/* Show a table of users */}
 
       <div className="w-full overflow-x-scroll">
+        <div className="mx-4 my-2">
+          <div className="font-bold">Select:</div>
+          <div className="mt-2 flex gap-2">
+            <Link
+              href="/users"
+              className={`py-2 px-4 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
+                searchParams.role === undefined && "bg-slate-700 text-slate-100"
+              }`}
+            >
+              All
+            </Link>
+            <Link
+              href="/users?role=admin"
+              className={`py-2 px-4 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
+                searchParams.role === "admin" && "bg-slate-700 text-slate-100"
+              }`}
+            >
+              Admin
+            </Link>
+            <Link
+              href="/users?role=speaker"
+              className={`py-2 px-4 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
+                searchParams.role === "speaker" && "bg-slate-700 text-slate-100"
+              }`}
+            >
+              Speaker
+            </Link>
+            <Link
+              href="/users?role=attendee"
+              className={`py-2 px-4 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
+                searchParams.role === "attendee" &&
+                "bg-slate-700 text-slate-100"
+              }`}
+            >
+              Attendee
+            </Link>
+          </div>
+        </div>
         <table className="table-auto max-w-full">
           <thead>
             <tr>
@@ -56,6 +106,7 @@ export default async function Users() {
               <th className="px-4 py-2">Role</th>
               <th className="px-4 py-2">Account Setup</th>
               <th className="px-4 py-2">Setup</th>
+              <th className="px-4 py-2">Auth Generations</th>
               <th className="px-4 py-2">Attending</th>
               <th className="px-4 py-2">Date of Birth</th>
               <th className="px-4 py-2">Phone Number</th>
@@ -79,9 +130,13 @@ export default async function Users() {
                 </td>
                 <td className="border px-4 py-2">
                   {!user.auth && (
-                    <CopySetupURL url={getSetupURL(user)}></CopySetupURL>
+                    <CopySetupURL
+                      url={getSetupURL(user)}
+                      userId={user.id}
+                    ></CopySetupURL>
                   )}
                 </td>
+                <td className="border px-4 py-2">{user.authGeneratations}</td>
                 <td className="border px-4 py-2">
                   {user.rsvp == null
                     ? "UNKNOWN"

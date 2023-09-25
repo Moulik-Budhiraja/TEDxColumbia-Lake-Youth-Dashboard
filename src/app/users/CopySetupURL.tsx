@@ -2,20 +2,24 @@
 
 import Button from "@/components/Button/Button";
 import { useRouter } from "next/navigation";
+import { urlCopied } from "./urlCopied";
 
 type Props = {
   url: string;
+  userId: string;
 };
 
-export default function CopySetupURL({ url }: Props) {
+export default function CopySetupURL({ url, userId }: Props) {
   const router = useRouter();
 
   return (
     <Button
       onClick={() => {
         navigator.clipboard.writeText(url);
-        router.refresh();
-        return "success";
+        urlCopied(userId).then(() => {
+          router.refresh();
+          return "success";
+        });
       }}
     >
       Copy

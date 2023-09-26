@@ -3,21 +3,33 @@ import { prisma } from "@/db";
 import jwt from "jsonwebtoken";
 import CopySetupURL from "./CopySetupURL";
 import Link from "next/link";
+import Filters from "./Filters";
 
 export const dynamic = "force-dynamic";
 
 type Props = {
   searchParams: {
     role?: string;
+    attending?: string;
   };
 };
 
 export default async function Users({ searchParams }: Props) {
+  console.log(searchParams);
+
   const users = await prisma.user.findMany({
     where: {
       role: {
         name: searchParams.role,
       },
+      rsvp:
+        searchParams.attending === "true"
+          ? { attending: true }
+          : searchParams.attending === "false"
+          ? { attending: false }
+          : searchParams.attending === "unknown"
+          ? null
+          : undefined,
     },
     include: {
       role: {
@@ -58,44 +70,7 @@ export default async function Users({ searchParams }: Props) {
       {/* Show a table of users */}
 
       <div className="w-full overflow-x-scroll">
-        <div className="mx-4 my-2">
-          <div className="font-bold">Select:</div>
-          <div className="mt-2 flex gap-2">
-            <Link
-              href="/users"
-              className={`py-2 px-4 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-                searchParams.role === undefined && "bg-slate-700 text-slate-100"
-              }`}
-            >
-              All
-            </Link>
-            <Link
-              href="/users?role=admin"
-              className={`py-2 px-4 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-                searchParams.role === "admin" && "bg-slate-700 text-slate-100"
-              }`}
-            >
-              Admin
-            </Link>
-            <Link
-              href="/users?role=speaker"
-              className={`py-2 px-4 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-                searchParams.role === "speaker" && "bg-slate-700 text-slate-100"
-              }`}
-            >
-              Speaker
-            </Link>
-            <Link
-              href="/users?role=attendee"
-              className={`py-2 px-4 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-                searchParams.role === "attendee" &&
-                "bg-slate-700 text-slate-100"
-              }`}
-            >
-              Attendee
-            </Link>
-          </div>
-        </div>
+        <Filters searchParams={searchParams}></Filters>
         <table className="table-auto max-w-full">
           <thead>
             <tr>

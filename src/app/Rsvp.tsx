@@ -14,13 +14,15 @@ export default function Rsvp({ user }: Props) {
       <h2 className="text-2xl">RSVP</h2>
       <p className="mb-2">
         Please RSVP by <span className="underline">Wednesday, October 4th</span>{" "}
-        to let us know that you&apos;ll be there.
+        to let us know that you&apos;ll be there. You can update your RSVP up
+        until that date.
       </p>
       <p>
         <span className="font-bold">Current Status: </span>{" "}
         {(!user.rsvp && "Not Started") ||
-          (user.rsvp?.attending && "Attending") ||
-          "Not Attending"}
+          (user.rsvp?.attending && (
+            <span className="text-green-800 font-bold">Attending</span>
+          )) || <span className="text-red-800 font-bold">Not Attending</span>}
       </p>
 
       {user.rsvp?.attending && (

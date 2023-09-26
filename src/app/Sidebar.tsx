@@ -104,8 +104,8 @@ export default function Sidebar() {
                   }`}
                 >
                   <span className="text-slate-950">
-                    {user.firstName.at(0)?.toUpperCase()}
-                    {user.lastName.at(0)?.toUpperCase()}
+                    {user?.firstName?.at(0)?.toUpperCase()}
+                    {user?.lastName?.at(0)?.toUpperCase()}
                   </span>
                 </div>
               ) : (

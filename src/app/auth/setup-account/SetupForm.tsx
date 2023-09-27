@@ -5,6 +5,7 @@ import Input from "@/components/Input/Input";
 import { User } from "@prisma/client";
 import { saveDetails } from "./SaveDetails";
 import { useState } from "react";
+import Link from "next/link";
 
 type Props = {
   user: User;
@@ -90,6 +91,30 @@ export default function LoginForm({ user, token }: Props) {
           className="w-full"
         ></Input>
       </div>
+
+      <div className="flex gap-2 items-center">
+        <input type="checkbox" id="terms" required={true} />
+        <label htmlFor="terms">
+          I agree to the{" "}
+          <Link
+            href={"/Terms-of-Service.pdf"}
+            target="_blank"
+            className="text-sky-600 underline hocus:text-sky-400 transition-all duration-300 ease-out"
+          >
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link
+            href={"/Privacy-Policy.pdf"}
+            target="_blank"
+            className="text-sky-600 underline hocus:text-sky-400 transition-all duration-300 ease-out"
+          >
+            Privacy Policy
+          </Link>
+          .
+        </label>
+      </div>
+
       <div className="font-bold text-tedx-red italic">{error}</div>
       <Button className="w-[10rem]">Save</Button>
     </form>

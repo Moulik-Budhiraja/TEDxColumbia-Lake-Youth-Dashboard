@@ -97,18 +97,7 @@ export default async function Users({ searchParams }: Props) {
               <tr key={user.id}>
                 <td className="border px-4 py-2">{user.firstName}</td>
                 <td className="border px-4 py-2">{user.lastName}</td>
-                <td className="border px-4 py-2">
-                  <Link
-                    href={`mailto:${
-                      user.email
-                    }?subject=[Action Required] Setup Your Account for TEDx Columbia Lake Youth&body=${getSetupURL(
-                      user
-                    )}`}
-                    target="_blank"
-                  >
-                    {user.email}
-                  </Link>
-                </td>
+                <td className="border px-4 py-2">{user.email}</td>
                 <td className="border px-4 py-2">{user.affiliation}</td>
                 <td className="border px-4 py-2">
                   {user.role.name.toUpperCase()}

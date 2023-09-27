@@ -12,6 +12,7 @@ import { useUser } from "@/hooks/useUser/useUser";
 import IconLogin from "@/components/Icons/IconLogin";
 import { signOut } from "next-auth/react";
 import IconKey from "@/components/Icons/IconKey";
+import IconMail from "@/components/Icons/IconMail";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
@@ -73,11 +74,26 @@ export default function Sidebar() {
                       text="Generate QR"
                     ></SidebarItem>
                   </Link>
+                </>
+              )}
+
+              {user?.role.permissions.admin && (
+                <>
                   <Link href={"/users"} onClick={() => setOpen(false)}>
                     <SidebarItem
                       fadeIn={fadeIn}
                       icon={<IconKey className="fill-tedx-white" />}
                       text="Manage Users"
+                    ></SidebarItem>
+                  </Link>
+                  <Link
+                    href={"/email-templates"}
+                    onClick={() => setOpen(false)}
+                  >
+                    <SidebarItem
+                      fadeIn={fadeIn}
+                      icon={<IconMail className="fill-tedx-white" />}
+                      text="Email Templates"
                     ></SidebarItem>
                   </Link>
                 </>

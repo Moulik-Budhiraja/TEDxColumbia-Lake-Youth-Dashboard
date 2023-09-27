@@ -119,7 +119,7 @@ export default async function Users({ searchParams }: Props) {
                 <td className="border px-4 py-2">
                   {!user.auth && (
                     <CopySetupURL
-                      url={getSetupURL(user)}
+                      email={user.email}
                       userId={user.id}
                     ></CopySetupURL>
                   )}
@@ -169,17 +169,3 @@ export default async function Users({ searchParams }: Props) {
     </div>
   );
 }
-
-// await prisma.user.create({
-//   data: {
-//     firstName: "John",
-//     lastName: "Doe",
-//     email: "johndoe@example.com",
-//     affiliation: "Example University",
-//     role: {
-//       connect: {
-//         id: "61e2e4ce-9de4-4159-b59b-4086c9d4fc66",
-//       },
-//     },
-//   },
-// });

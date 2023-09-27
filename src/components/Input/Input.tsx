@@ -59,16 +59,17 @@ export default function Input({
         value={value}
         disabled={disabled}
         required={required}
+        spellCheck={true}
         ref={ref}
       />
 
       <span
-        className={`absolute font-display my-2 bg-slate-50  pointer-events-none transition-all duration-300 ease-in-out peer-focus:mx-2 peer-focus:px-2 peer-focus:left-1 peer-focus:-top-6 peer-focus:tracking-widest peer-focus:border-x peer-focus:border-x-slate-950 ${
+        className={`absolute font-display my-2 bg-slate-50 text-slate-400  pointer-events-none transition-all duration-300 ease-in-out peer-focus:mx-2 peer-focus:px-2 peer-focus:left-1 peer-focus:-top-5 peer-focus:border-x peer-focus:border-x-slate-950 peer-focus:text-sm peer-focus:text-slate-700 ${
           value !== "" || disabled
-            ? `mx-2 px-2 left-1 -top-6 tracking-widest border-x  border-x-slate-400 ${
+            ? `mx-2 px-2 left-1 -top-5 border-x text-sm border-x-slate-400 text-slate-700 ${
                 disabled ? "text-slate-600" : "text-slate-950"
               }`
-            : "mx-2 px-2 left-0 top-0 border-x-slate-850"
+            : "mx-1 px-1 left-0 top-0 border-x-slate-800 text-slate-400"
         } peer-focus:border-x-slate-400`}
       >
         {placeholder}

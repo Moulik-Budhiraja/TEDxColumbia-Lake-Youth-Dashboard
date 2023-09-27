@@ -1,0 +1,14 @@
+-- CreateTable
+CREATE TABLE `EmailTemplate` (
+    `id` VARCHAR(191) NOT NULL,
+    `roleId` VARCHAR(191) NOT NULL,
+    `subject` VARCHAR(191) NOT NULL,
+    `body` VARCHAR(191) NOT NULL,
+    `createdAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `updatedAt` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `EmailTemplate` ADD CONSTRAINT `EmailTemplate_roleId_fkey` FOREIGN KEY (`roleId`) REFERENCES `Role`(`id`) ON DELETE CASCADE ON UPDATE NO ACTION;

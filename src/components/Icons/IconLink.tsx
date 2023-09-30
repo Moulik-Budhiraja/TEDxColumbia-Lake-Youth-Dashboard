@@ -7,9 +7,9 @@ export default function IconLink({ className, pathClassName }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height="48"
+      height="30"
       viewBox="0 -960 960 960"
-      width="48"
+      width="30"
       className={className}
     >
       <path

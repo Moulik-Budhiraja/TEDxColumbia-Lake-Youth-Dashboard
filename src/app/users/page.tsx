@@ -95,17 +95,25 @@ export default async function Users({ searchParams }: Props) {
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td className="border px-4 py-2">{user.firstName}</td>
-                <td className="border px-4 py-2">{user.lastName}</td>
-                <td className="border px-4 py-2">{user.email}</td>
-                <td className="border px-4 py-2">{user.affiliation}</td>
-                <td className="border px-4 py-2">
+                <td className="border dark:border-slate-700 px-4 py-2">
+                  {user.firstName}
+                </td>
+                <td className="border dark:border-slate-700 px-4 py-2">
+                  {user.lastName}
+                </td>
+                <td className="border dark:border-slate-700 px-4 py-2">
+                  {user.email}
+                </td>
+                <td className="border dark:border-slate-700 px-4 py-2">
+                  {user.affiliation}
+                </td>
+                <td className="border dark:border-slate-700 px-4 py-2">
                   {user.role.name.toUpperCase()}
                 </td>
-                <td className="border px-4 py-2">
+                <td className="border dark:border-slate-700 px-4 py-2">
                   {!!user.auth ? "TRUE" : "FALSE"}
                 </td>
-                <td className="border px-4 py-2">
+                <td className="border dark:border-slate-700 px-4 py-2">
                   {!user.auth && (
                     <CopySetupURL
                       email={user.email}
@@ -113,15 +121,17 @@ export default async function Users({ searchParams }: Props) {
                     ></CopySetupURL>
                   )}
                 </td>
-                <td className="border px-4 py-2">{user.authGeneratations}</td>
-                <td className="border px-4 py-2">
+                <td className="border dark:border-slate-700 px-4 py-2">
+                  {user.authGeneratations}
+                </td>
+                <td className="border dark:border-slate-700 px-4 py-2">
                   {user.rsvp == null
                     ? "UNKNOWN"
                     : user.rsvp?.attending
                     ? "TRUE"
                     : "FALSE"}
                 </td>
-                <td className="border px-4 py-2">
+                <td className="border dark:border-slate-700 px-4 py-2">
                   {!!user.rsvp?.dateOfBirth &&
                     user.rsvp.dateOfBirth.toLocaleDateString("en-us", {
                       year: "numeric",
@@ -129,17 +139,17 @@ export default async function Users({ searchParams }: Props) {
                       day: "numeric",
                     })}
                 </td>
-                <td className="border px-4 py-2">
+                <td className="border dark:border-slate-700 px-4 py-2">
                   {!!user?.rsvp?.phoneNumber && user.rsvp.phoneNumber}
                 </td>
-                <td className="border px-4 py-2">
+                <td className="border dark:border-slate-700 px-4 py-2">
                   {!!user?.rsvp?.mealPreference && user.rsvp.mealPreference}
                 </td>
-                <td className="border px-4 py-2">
+                <td className="border dark:border-slate-700 px-4 py-2">
                   {!!user?.rsvp?.dietaryRestrictions &&
                     user.rsvp.dietaryRestrictions}
                 </td>
-                <td className="border px-4 py-2">
+                <td className="border dark:border-slate-700 px-4 py-2">
                   {!!user?.rsvp?.waiverName && (
                     <a
                       href={`/api/waiver/${user.id}`}

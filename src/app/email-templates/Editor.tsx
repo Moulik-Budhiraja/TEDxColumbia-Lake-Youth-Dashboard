@@ -91,7 +91,7 @@ export default function Editor({ searchParams, previousTemplate }: Props) {
           id=""
           cols={30}
           rows={8}
-          className="p-2 font-sans bg-slate-50 border border-slate-400 rounded-md outline-none focus:border-slate-950 transition-all duration-300 ease-out peer"
+          className="p-2 font-sans bg-slate-50 border border-slate-400 rounded-md outline-none focus:outline-2 focus:outline-offset-0 dark:bg-slate-800 focus:outline-slate-600 dark:border-slate-600 transition-colors duration-300 ease-out peer"
           placeholder="Body"
           spellCheck={true}
           key={searchParams.role}

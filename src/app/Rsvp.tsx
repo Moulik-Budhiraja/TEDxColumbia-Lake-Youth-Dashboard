@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button/Button";
+import StyledLink from "@/components/StyledLink/StyledLink";
 import { UserWithRole, UserWithRsvp } from "@/types/morePrismaTypes";
 import Link from "next/link";
 
@@ -10,7 +11,7 @@ type Props = {
 
 export default function Rsvp({ user }: Props) {
   return (
-    <div className="m-2 p-2 rounded-md border border-slate-400 max-w-lg">
+    <div className="m-2 p-2 rounded-md border border-slate-400 dark:border-slate-700">
       <h2 className="text-2xl">RSVP</h2>
       <p className="mb-2">
         Please RSVP by <span className="underline">Wednesday, October 4th</span>{" "}
@@ -21,8 +22,14 @@ export default function Rsvp({ user }: Props) {
         <span className="font-bold">Current Status: </span>{" "}
         {(!user.rsvp && "Not Started") ||
           (user.rsvp?.attending && (
-            <span className="text-green-800 font-bold">Attending</span>
-          )) || <span className="text-red-800 font-bold">Not Attending</span>}
+            <span className="text-green-800 dark:text-green-600 font-bold">
+              Attending
+            </span>
+          )) || (
+            <span className="text-red-800 dark:text-red-600 font-bold">
+              Not Attending
+            </span>
+          )}
       </p>
 
       {user.rsvp?.attending && (
@@ -54,13 +61,13 @@ export default function Rsvp({ user }: Props) {
           <p>
             <span className="font-bold">Waiver: </span>
             {user.rsvp.waiverName ? (
-              <Link
+              <StyledLink
                 href={`/api/waiver/${user.id}`}
                 className="text-sky-600 underline hover:text-sky-400 transition-all duration-300 ease-out"
                 target="_blank"
               >
                 Signed
-              </Link>
+              </StyledLink>
             ) : (
               "Not Signed"
             )}

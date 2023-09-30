@@ -7,7 +7,7 @@ type Props = {
 
 export default function MenuCard({ name, link }: Props) {
   return (
-    <div className="p-4 bg-white border border-slate-400 rounded-md w-44">
+    <div className="p-4 bg-white border border-slate-400 rounded-md w-44 dark:bg-slate-800 dark:border-slate-700 transition-colors duration-300 ease-out">
       <div className="rounded overflow-hidden w-full">
         <img className="w-full" src={link} alt={name}></img>
       </div>

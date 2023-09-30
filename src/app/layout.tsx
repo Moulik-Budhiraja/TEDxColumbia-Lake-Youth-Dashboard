@@ -18,11 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-tedx-white`}>
+      <body className={`${inter.className} bg-tedx-white dark:bg-tedx-dark-bg`}>
         <Providers>
           <main className="flex">
             <Sidebar />
-            <section className="pl-16 w-full overflow-x-hidden">
+            <section className="pl-16 w-full overflow-x-hidden dark:bg-tedx-dark-bg dark:text-tedx-white transition-colors duration-300 ease-out">
               <div className="w-full">{children}</div>
             </section>
             {/* Yes that margin is scuffed */}

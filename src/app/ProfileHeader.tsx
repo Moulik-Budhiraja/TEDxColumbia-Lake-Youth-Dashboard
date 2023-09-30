@@ -19,10 +19,18 @@ export default function ProfileHeader({ user, profile }: Props) {
 
   return (
     <div
-      className={`flex flex-col justify-start items-center gap-4 h-fit bg-${baseColor}-300 pt-12 drop-shadow-xl md:h-screen md:w-1/2 md:justify-center 2xl:w-full 2xl:h-80 `}
+      className={`flex flex-col justify-start items-center gap-4 h-fit pt-12 drop-shadow-xl md:h-screen md:w-1/2 md:justify-center 2xl:w-full 2xl:h-80 ${
+        baseColor === "blue" && "bg-blue-300"
+      } ${baseColor === "red" && "bg-red-300"} ${
+        baseColor === "teal" && "bg-teal-300"
+      }`}
     >
       <div
-        className={`w-[min(50vh,75%)] aspect-square bg-${baseColor}-500 rounded-full drop-shadow-lg shadow-${baseColor}-950 flex items-center justify-center text-8xl text-${baseColor}-950 2xl:absolute 2xl:w-60 2xl:top-1/2 left-12 2xl:-translate-y-1/2`}
+        className={`w-[min(50vh,75%)] aspect-square rounded-full drop-shadow-lg flex items-center justify-center text-8xl 2xl:absolute 2xl:w-60 2xl:top-1/2 left-12 2xl:-translate-y-1/2 ${
+          baseColor === "blue" && "bg-blue-500 text-blue-950 shadow-blue-950"
+        } ${baseColor === "red" && "bg-red-500 text-red-950 shadow-red-950"} ${
+          baseColor === "teal" && "bg-teal-500 text-teal-950 shadow-teal-950"
+        }`}
       >
         {user?.firstName?.at(0)?.toUpperCase()}
         {user?.lastName?.at(0)?.toUpperCase()}
@@ -37,7 +45,11 @@ export default function ProfileHeader({ user, profile }: Props) {
             target="_blank"
           >
             <IconInstagram
-              className={`w-10 h-10 fill-${baseColor}-500 stroke-none`}
+              className={`w-10 h-10 stroke-none ${
+                baseColor === "blue" && "text-blue-500"
+              } ${baseColor === "red" && "text-red-500"} ${
+                baseColor === "teal" && "text-teal-500"
+              }`}
             />
           </Link>
         )}
@@ -48,7 +60,11 @@ export default function ProfileHeader({ user, profile }: Props) {
             target="_blank"
           >
             <IconLinkedin
-              className={`w-10 h-10 fill-${baseColor}-500 stroke-none`}
+              className={`w-10 h-10 stroke-none ${
+                baseColor === "blue" && "text-blue-500"
+              } ${baseColor === "red" && "text-red-500"} ${
+                baseColor === "teal" && "text-teal-500"
+              }`}
             />
           </Link>
         )}
@@ -59,7 +75,11 @@ export default function ProfileHeader({ user, profile }: Props) {
             target="_blank"
           >
             <IconTwitter
-              className={`w-10 h-10 fill-${baseColor}-500 stroke-none`}
+              className={`w-10 h-10 stroke-none ${
+                baseColor === "blue" && "text-blue-500"
+              } ${baseColor === "red" && "text-red-500"} ${
+                baseColor === "teal" && "text-teal-500"
+              }`}
             />
           </Link>
         )}
@@ -79,7 +99,11 @@ export default function ProfileHeader({ user, profile }: Props) {
           className={`opacity-50 cursor-pointer hocus:opacity-100 transition-all duration-300 ease-out absolute top-4 right-4`}
         >
           <IconEdit
-            className={`w-8 h-8 fill-${baseColor}-500 stroke-none`}
+            className={`w-8 h-8 stroke-none ${
+              baseColor === "blue" && "text-blue-500"
+            } ${baseColor === "red" && "text-red-500"} ${
+              baseColor === "teal" && "text-teal-500"
+            }`}
           ></IconEdit>
         </div>
       </Link>

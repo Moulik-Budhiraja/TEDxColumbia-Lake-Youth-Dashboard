@@ -69,7 +69,7 @@ export default async function Home() {
               <h2 className="font-bold">About Me</h2>
               <div className="pl-2 flex flex-col gap-2">
                 {userProfile.aboutMe?.split("\n").map((paragraph) => (
-                  <p>{paragraph}</p>
+                  <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
             </div>

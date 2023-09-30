@@ -12,6 +12,8 @@ type Props = {
   required?: boolean;
   preventSubmit?: boolean;
   ref?: any;
+  rows?: number;
+  cols?: number;
   onChange?: (value: string) => void;
   onEnter?: (value: string) => void;
 };
@@ -26,6 +28,9 @@ export default function Textarea({
   required,
   preventSubmit,
   ref,
+  rows,
+  cols,
+
   onChange,
   onEnter,
 }: Props) {
@@ -58,6 +63,8 @@ export default function Textarea({
         required={required}
         spellCheck={true}
         ref={ref}
+        rows={rows}
+        cols={cols}
       ></textarea>
 
       <span

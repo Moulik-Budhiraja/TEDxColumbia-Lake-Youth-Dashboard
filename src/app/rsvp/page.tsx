@@ -27,7 +27,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="h-screen w-full">
+    <div className="w-full">
       <Header
         title="RSVP"
         description="Please fill out this form to let us know you'll be there"

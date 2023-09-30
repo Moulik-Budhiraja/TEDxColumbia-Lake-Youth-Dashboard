@@ -25,7 +25,8 @@ model User {
   auth              Auth?
   authGeneratations Int   @default(0)
 
-  rsvp Rsvp?
+  rsvp    Rsvp?
+  profile Profile?
 
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
@@ -89,6 +90,28 @@ model Rsvp {
   dietaryRestrictions String? @db.VarChar(1000)
 
   waiverName String? @db.VarChar(1000)
+
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
+}
+
+model Profile {
+  id String @id @default(uuid())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  userId String @unique
+
+  aboutMe String? @db.VarChar(10000)
+
+  instagramHandle String? @db.VarChar(255)
+  twitterHandle   String? @db.VarChar(255)
+  linkedInHandle  String? @db.VarChar(255)
+
+  link1Name String? @db.VarChar(255)
+  link1Url  String? @db.VarChar(1000)
+
+  link2Name String? @db.VarChar(255)
+  link2Url  String? @db.VarChar(1000)
 
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)

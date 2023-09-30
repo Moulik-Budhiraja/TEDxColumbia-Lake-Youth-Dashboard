@@ -6,6 +6,7 @@ import { EmailTemplate } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { updateTemplate } from "./updateTemplates";
+import Textarea from "@/components/Textarea/Textarea";
 
 type Props = {
   searchParams: {
@@ -17,8 +18,6 @@ type Props = {
 export default function Editor({ searchParams, previousTemplate }: Props) {
   const current = new URLSearchParams(searchParams);
   const router = useRouter();
-
-  console.log(current.get("role"));
 
   const setParam = useCallback((key: string, value: string | null) => {
     if (value) {
@@ -86,17 +85,14 @@ export default function Editor({ searchParams, previousTemplate }: Props) {
           name="subject"
           defaultValue={previousTemplate?.subject}
         />
-        <textarea
+
+        <Textarea
           name="body"
-          id=""
           cols={30}
           rows={8}
-          className="p-2 font-sans bg-slate-50 border border-slate-400 rounded-md outline-none focus:outline-2 focus:outline-offset-0 dark:bg-slate-800 focus:outline-slate-600 dark:border-slate-600 transition-colors duration-300 ease-out peer"
           placeholder="Body"
-          spellCheck={true}
-          key={searchParams.role}
-          defaultValue={previousTemplate?.body}
-        ></textarea>
+          defaultValue={previousTemplate.body}
+        ></Textarea>
         <Button className="w-40">Save</Button>
       </form>
       <div className="mt-4">

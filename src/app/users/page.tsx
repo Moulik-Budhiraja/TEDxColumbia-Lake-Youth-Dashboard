@@ -132,25 +132,24 @@ export default async function Users({ searchParams }: Props) {
                     : "FALSE"}
                 </td>
                 <td className="border dark:border-slate-700 px-4 py-2">
-                  {!!user.rsvp?.dateOfBirth &&
-                    user.rsvp.dateOfBirth.toLocaleDateString("en-us", {
+                  {user?.rsvp?.attending &&
+                    user?.rsvp?.dateOfBirth?.toLocaleDateString("en-us", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
                 </td>
                 <td className="border dark:border-slate-700 px-4 py-2">
-                  {!!user?.rsvp?.phoneNumber && user.rsvp.phoneNumber}
+                  {user?.rsvp?.attending && user?.rsvp?.phoneNumber}
                 </td>
                 <td className="border dark:border-slate-700 px-4 py-2">
-                  {!!user?.rsvp?.mealPreference && user.rsvp.mealPreference}
+                  {user?.rsvp?.attending && user?.rsvp?.mealPreference}
                 </td>
                 <td className="border dark:border-slate-700 px-4 py-2">
-                  {!!user?.rsvp?.dietaryRestrictions &&
-                    user.rsvp.dietaryRestrictions}
+                  {user?.rsvp?.attending && user?.rsvp?.dietaryRestrictions}
                 </td>
                 <td className="border dark:border-slate-700 px-4 py-2">
-                  {!!user?.rsvp?.waiverName && (
+                  {user?.rsvp?.attending && !!user?.rsvp?.waiverName && (
                     <a
                       href={`/api/waiver/${user.id}`}
                       className="text-sky-600 underline hover:text-sky-400 transition-all duration-300 ease-out"

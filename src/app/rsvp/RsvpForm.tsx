@@ -1,9 +1,8 @@
 "use client";
 
 import Button from "@/components/Button/Button";
-import Input from "@/components/Input/Input";
 import Link from "next/link";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import Menu from "./Menu";
 import { menuOptions } from "./menuOptions";
 import { rsvpFormSubmit } from "./rsvpFormSubmit";
@@ -16,24 +15,68 @@ type Props = {
 export default function RsvpForm({ user }: Props) {
   const [attending, setAttending] = useState(false);
   const [filename, setFilename] = useState("");
+  const fileInput = useRef<HTMLInputElement>(null);
 
-  console.log(user.rsvp?.phoneNumber);
+  // Sketchy date manipulation, basically subtracting 1 day from the date of birth
+  const t = user.rsvp?.dateOfBirth
+    ? new Date(user.rsvp.dateOfBirth.toISOString()).setDate(
+        user.rsvp?.dateOfBirth.getDate() - 1
+      )
+    : undefined;
+
+  const oldDateOfBirth = t
+    ? new Date(t).toISOString().substring(0, 10)
+    : undefined;
+
+  useEffect(() => {
+    fetch(`/api/waiver/${user.id}`)
+      .then((res) => res.blob())
+      .then((data) => {
+        if (data && user?.rsvp?.attending) {
+          const container = new DataTransfer();
+          container.items.add(
+            new File([data], "waiver.pdf", { type: "application/pdf" })
+          );
+          fileInput.current?.files &&
+            (fileInput.current.files = container.files);
+
+          setFilename("waiver.pdf");
+        }
+      });
+  }, [attending]);
 
   return (
-    <form action={rsvpFormSubmit} className="p-4 flex flex-col gap-4">
-      <div className="flex gap-2 items-center">
-        <input
-          type="checkbox"
-          name="attending"
-          id="attending"
-          onChange={(e) => {
-            console.log(e.target.checked);
-            setAttending(e.target.checked);
-          }}
-        />
-        <label htmlFor="attending">
-          I will be attending TED<sup>X</sup> Columbia Lake Youth
-        </label>
+    <form
+      action={rsvpFormSubmit}
+      className="p-4 flex flex-col gap-4 mb-16 md:mb-0"
+    >
+      <div>
+        <div className="flex gap-2 items-center">
+          <input
+            type="radio"
+            id="attending-1"
+            name="attending"
+            value="on"
+            onChange={() => setAttending(true)}
+          />
+          <label htmlFor="attending-1">
+            I will be attending TED<sup>X</sup> Columbia Lake Youth
+          </label>
+        </div>
+        <div className="flex gap-2 items-center">
+          <input
+            type="radio"
+            id="attending-2"
+            name="attending"
+            value="off"
+            onChange={() => setAttending(false)}
+          />
+          <label htmlFor="attending-2">
+            I will <span className="font-bold underline">not</span> be attending
+            TED
+            <sup>X</sup> Columbia Lake Youth
+          </label>
+        </div>
       </div>
 
       {attending && (
@@ -48,9 +91,7 @@ export default function RsvpForm({ user }: Props) {
               name="date-of-birth"
               id="date-of-birth"
               className="w-40 p-2 rounded-md border border-slate-400 bg-tedx-white outline-none focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
-              defaultValue={user.rsvp?.dateOfBirth
-                ?.toISOString()
-                .substring(0, 10)}
+              defaultValue={oldDateOfBirth}
               required={true}
             />
           </div>
@@ -63,7 +104,7 @@ export default function RsvpForm({ user }: Props) {
               type="tel"
               id="phone"
               name="phone"
-              placeholder="123-456-7890"
+              placeholder="(123) 456-7890"
               className="w-40 p-2 rounded-md border border-slate-400 outline-none focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
               defaultValue={user.rsvp?.phoneNumber ?? ""}
             />
@@ -104,6 +145,7 @@ export default function RsvpForm({ user }: Props) {
               placeholder="Vegetarian, Gluten Free, etc."
               name="dietary-restrictions"
               className="mt-4 p-2 border border-slate-400 rounded-md outline-none focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
+              defaultValue={user.rsvp?.dietaryRestrictions ?? ""}
             />
           </div>
 
@@ -130,7 +172,9 @@ export default function RsvpForm({ user }: Props) {
                   name="file"
                   accept="application/pdf"
                   required={true}
+                  ref={fileInput}
                   onChange={(e) => {
+                    console.log(e.target.files?.[0]);
                     setFilename(e.target.value.replace(/.*[\/\\]/, ""));
                   }}
                 />

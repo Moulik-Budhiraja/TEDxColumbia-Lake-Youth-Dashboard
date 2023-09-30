@@ -25,7 +25,7 @@ export default function Sidebar() {
       <nav
         className={`${
           fadeIn ? "w-3/4" : "w-16"
-        } fixed bg-slate-800 h-[100dvh] border-r border-slate-900 max-w-xs text-tedx-white transition-all duration-300 ease-out cursor-default`}
+        } fixed bg-tedx-blue h-[100dvh] border-r border-slate-900 max-w-xs text-tedx-white transition-[width] duration-300 ease-out cursor-default z-40`}
       >
         <IconHamburger
           className="absolute top-4 right-5 z-10"
@@ -114,7 +114,7 @@ export default function Sidebar() {
               {user ? (
                 <div
                   className={`p-2 rounded-full flex justify-center items-center w-10 aspect-square ${
-                    (user.role.name === "attendee" && "bg-green-300") ||
+                    (user.role.name === "attendee" && "bg-teal-300") ||
                     (user.role.name === "speaker" && "bg-red-300") ||
                     (user.role.name === "admin" && "bg-blue-300")
                   }`}
@@ -154,15 +154,15 @@ export default function Sidebar() {
                   } bottom-6 rounded-md w-40 p-2 opacity-0 pointer-events-none group-focus:opacity-100 group-focus:pointer-events-auto transition-all duration-300 ease-out before:content-[''] before:w-2 before:h-2 before:rotate-45 before:absolute before:-left-1 before:bottom-3 before:bg-slate-600`}
                 >
                   <ul>
-                    <li
+                    {/* <li
                       className=" px-2 py-1 rounded hocus:bg-slate-400"
                       onClick={() => window.location.replace("/profile")}
                     >
                       Profile
-                    </li>
+                    </li> */}
 
                     <li
-                      className="border-t border-slate-700 mt-2 py-1 px-2 rounded hocus:bg-slate-400"
+                      className="py-1 px-2 rounded hocus:bg-slate-400"
                       onClick={() =>
                         signOut({
                           callbackUrl: "/",

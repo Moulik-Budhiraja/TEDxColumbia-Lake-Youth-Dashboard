@@ -4,6 +4,7 @@ import Header from "@/components/Header/Header";
 import { generateQr } from "./generateQr";
 import { useEffect, useState } from "react";
 import { requirePermission } from "@/serverFunctions/user/requirePermission";
+import Button from "@/components/Button/Button";
 
 export default function GenerateQR() {
   const [qr, setQr] = useState("");
@@ -43,18 +44,20 @@ export default function GenerateQR() {
           <div className="text-sm">{id}</div>
         </div>
         <div className="flex gap-4">
-          <button
+          <Button
             className="border border-slate-600 p-2 rounded-md"
-            onClick={newQr}
+            onClick={() => {
+              newQr();
+            }}
           >
             Generate New QR code
-          </button>
-          <button
+          </Button>
+          <Button
             className="border border-slate-600 p-2 rounded-md"
             onClick={download}
           >
             Download
-          </button>
+          </Button>
         </div>
       </div>
     </div>

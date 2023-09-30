@@ -10,10 +10,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        display: ["Poppins", "sans-serif"],
+      },
       colors: {
         "tedx-blue": "#111827",
         "tedx-white": "#f2f1f4",
         "tedx-red": "#eb0028",
+        "tedx-dark-red": "#3F0D21",
+        "tedx-dark-blue": "#111827",
+        "tedx-muted": "#999",
+        "tedx-paragraph": "#e5e7eb",
+        "tedx-dark-bg": "rgb(21, 32, 47)",
       },
       aspectRatio: {
         unset: "unset",

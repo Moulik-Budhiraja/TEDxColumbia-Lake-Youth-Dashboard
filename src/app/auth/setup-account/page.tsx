@@ -45,7 +45,7 @@ export default async function SetupAccount({ searchParams }: Props) {
   return (
     <div className="w-full h-screen p-4 flex items-center justify-center">
       <div className="flex flex-col items-center gap-4 justify-center">
-        <h1 className="font-display text-4xl text-slate-900">
+        <h1 className="font-display text-4xl text-slate-900 dark:text-tedx-white">
           New{" "}
           {decoded.role?.at(0)?.toUpperCase() +
             decoded.role?.slice(1).toLowerCase()}{" "}

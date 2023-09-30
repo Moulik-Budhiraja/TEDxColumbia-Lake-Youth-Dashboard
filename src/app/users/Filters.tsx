@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { type } from "os";
 import { useCallback } from "react";
+import FilterChip from "./FilterChip";
 
 type Props = {
   searchParams: {
@@ -32,90 +33,72 @@ export default function Filters({ searchParams }: Props) {
     <div className="mx-4 my-2">
       <div className="font-bold">Filter:</div>
       <div className="mt-2 flex gap-2">
-        <button
+        <FilterChip
+          selected={current.get("role") === null}
           onClick={() => {
             setParam("role", null);
           }}
-          className={`py-1 px-2 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-            current.get("role") === null && "bg-slate-700 text-slate-100"
-          }`}
         >
           All
-        </button>
-        <button
+        </FilterChip>
+        <FilterChip
+          selected={current.get("role") === "admin"}
           onClick={() => {
             setParam("role", "admin");
           }}
-          className={`py-1 px-2 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-            current.get("role") === "admin" && "bg-slate-700 text-slate-100"
-          }`}
         >
           Admin
-        </button>
-        <button
+        </FilterChip>{" "}
+        <FilterChip
+          selected={current.get("role") === "speaker"}
           onClick={() => {
             setParam("role", "speaker");
           }}
-          className={`py-1 px-2 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-            current.get("role") === "speaker" && "bg-slate-700 text-slate-100"
-          }`}
         >
           Speaker
-        </button>
-        <button
+        </FilterChip>{" "}
+        <FilterChip
+          selected={current.get("role") === "attendee"}
           onClick={() => {
             setParam("role", "attendee");
           }}
-          className={`py-1 px-2 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-            current.get("role") === "attendee" && "bg-slate-700 text-slate-100"
-          }`}
         >
           Attendee
-        </button>
+        </FilterChip>
       </div>
       <div className="mt-2 flex gap-2">
-        <button
+        <FilterChip
+          selected={current.get("attending") === null}
           onClick={() => {
             setParam("attending", null);
           }}
-          className={`py-1 px-2 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-            current.get("attending") === null && "bg-slate-700 text-slate-100"
-          }`}
         >
           All
-        </button>
-        <button
+        </FilterChip>{" "}
+        <FilterChip
+          selected={current.get("attending") === "true"}
           onClick={() => {
             setParam("attending", "true");
           }}
-          className={`py-1 px-2 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-            current.get("attending") === "true" && "bg-slate-700 text-slate-100"
-          }`}
         >
           Attending
-        </button>
-        <button
+        </FilterChip>{" "}
+        <FilterChip
+          selected={current.get("attending") === "false"}
           onClick={() => {
             setParam("attending", "false");
           }}
-          className={`py-1 px-2 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-            current.get("attending") === "false" &&
-            "bg-slate-700 text-slate-100"
-          }`}
         >
           Not Attending
-        </button>
-        <button
+        </FilterChip>{" "}
+        <FilterChip
+          selected={current.get("attending") === "unknown"}
           onClick={() => {
             setParam("attending", "unknown");
           }}
-          className={`py-1 px-2 border border-slate-400 rounded-md hover:bg-slate-700 hover:text-slate-100 transition-all duration-300 ease-out ${
-            current.get("attending") === "unknown" &&
-            "bg-slate-700 text-slate-100"
-          }`}
         >
           Unknown
-        </button>
+        </FilterChip>
       </div>
     </div>
   );

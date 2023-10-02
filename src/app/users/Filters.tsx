@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { type } from "os";
 import { useCallback } from "react";
 import FilterChip from "./FilterChip";
+import SearchBar from "@/components/SearchBar/SearchBar";
 
 type Props = {
   searchParams: {
@@ -31,8 +32,17 @@ export default function Filters({ searchParams }: Props) {
 
   return (
     <div className="mx-4 my-2">
-      <div className="font-bold">Filter:</div>
-      <div className="mt-2 flex gap-2">
+      <div className="font-bold">Search:</div>
+      <SearchBar
+        className="max-w-lg"
+        placeholder="Name"
+        onSearch={(value) => {
+          setParam("search", value);
+        }}
+      ></SearchBar>
+
+      <div className="font-bold mt-4">Filter:</div>
+      <div className="mt-2 flex gap-2 flex-wrap">
         <FilterChip
           selected={current.get("role") === null}
           onClick={() => {
@@ -66,7 +76,7 @@ export default function Filters({ searchParams }: Props) {
           Attendee
         </FilterChip>
       </div>
-      <div className="mt-2 flex gap-2">
+      <div className="mt-2 flex gap-2 flex-wrap">
         <FilterChip
           selected={current.get("attending") === null}
           onClick={() => {

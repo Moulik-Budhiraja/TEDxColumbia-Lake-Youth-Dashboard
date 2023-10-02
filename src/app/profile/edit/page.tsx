@@ -112,21 +112,21 @@ export default async function EditProfile() {
 
           <Input
             placeholder="Instagram"
-            ghostPlaceholder="tedxcolumbialakeyouth"
+            ghostPlaceholder="https://www.instagram.com/tedxcolumbialakeyouth/"
             className="max-w-lg"
             name="instagram-handle"
             defaultValue={userProfile?.instagramHandle ?? ""}
           ></Input>
           <Input
             placeholder="Linkedin"
-            ghostPlaceholder="tedxcolumbialakeyouth"
+            ghostPlaceholder="https://www.linkedin.com/in/tedxcolumbialakeyouth/"
             className="max-w-lg"
             name="linkedin-handle"
             defaultValue={userProfile?.linkedInHandle ?? ""}
           ></Input>
           <Input
             placeholder="Twitter"
-            ghostPlaceholder="TEDxColumbiaY"
+            ghostPlaceholder="https://twitter.com/TEDxColumbiaY"
             className="max-w-lg"
             name="twitter-handle"
             defaultValue={userProfile?.twitterHandle ?? ""}

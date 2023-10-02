@@ -41,14 +41,14 @@ export default function ProfileHeader({ user, profile }: Props) {
         {profile?.instagramHandle && (
           <Link
             className={`opacity-50 cursor-pointer hocus:opacity-100 transition-all duration-300 ease-out`}
-            href={`https://www.instagram.com/${profile.instagramHandle}`}
+            href={profile.instagramHandle}
             target="_blank"
           >
             <IconInstagram
               className={`w-10 h-10 stroke-none ${
-                baseColor === "blue" && "text-blue-500"
-              } ${baseColor === "red" && "text-red-500"} ${
-                baseColor === "teal" && "text-teal-500"
+                baseColor === "blue" && "fill-blue-500"
+              } ${baseColor === "red" && "fill-red-500"} ${
+                baseColor === "teal" && "fill-teal-500"
               }`}
             />
           </Link>
@@ -56,14 +56,14 @@ export default function ProfileHeader({ user, profile }: Props) {
         {profile?.linkedInHandle && (
           <Link
             className={`opacity-50 cursor-pointer hocus:opacity-100 transition-all duration-300 ease-out`}
-            href={`https://www.linkedin.com/in/${profile?.linkedInHandle}`}
+            href={profile?.linkedInHandle}
             target="_blank"
           >
             <IconLinkedin
               className={`w-10 h-10 stroke-none ${
-                baseColor === "blue" && "text-blue-500"
-              } ${baseColor === "red" && "text-red-500"} ${
-                baseColor === "teal" && "text-teal-500"
+                baseColor === "blue" && "fill-blue-500"
+              } ${baseColor === "red" && "fill-red-500"} ${
+                baseColor === "teal" && "fill-teal-500"
               }`}
             />
           </Link>
@@ -71,14 +71,14 @@ export default function ProfileHeader({ user, profile }: Props) {
         {profile?.twitterHandle && (
           <Link
             className={`opacity-50 cursor-pointer hocus:opacity-100 transition-all duration-300 ease-out`}
-            href={`https://twitter.com/${profile?.twitterHandle}`}
+            href={profile?.twitterHandle}
             target="_blank"
           >
             <IconTwitter
               className={`w-10 h-10 stroke-none ${
-                baseColor === "blue" && "text-blue-500"
-              } ${baseColor === "red" && "text-red-500"} ${
-                baseColor === "teal" && "text-teal-500"
+                baseColor === "blue" && "fill-blue-500"
+              } ${baseColor === "red" && "fill-red-500"} ${
+                baseColor === "teal" && "fill-teal-500"
               }`}
             />
           </Link>
@@ -96,13 +96,13 @@ export default function ProfileHeader({ user, profile }: Props) {
       </div>
       <Link href={`/profile/edit`}>
         <div
-          className={`opacity-50 cursor-pointer hocus:opacity-100 transition-all duration-300 ease-out absolute top-4 right-4`}
+          className={`opacity-60 cursor-pointer hocus:opacity-100 transition-all duration-300 ease-out absolute top-4 right-4`}
         >
           <IconEdit
             className={`w-8 h-8 stroke-none ${
-              baseColor === "blue" && "text-blue-500"
-            } ${baseColor === "red" && "text-red-500"} ${
-              baseColor === "teal" && "text-teal-500"
+              baseColor === "blue" && "fill-blue-600"
+            } ${baseColor === "red" && "fill-red-600"} ${
+              baseColor === "teal" && "fill-teal-600"
             }`}
           ></IconEdit>
         </div>

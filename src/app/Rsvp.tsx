@@ -14,7 +14,7 @@ export default function Rsvp({ user }: Props) {
     <div className="m-2 p-2 rounded-md border border-slate-400 dark:border-slate-700">
       <h2 className="text-2xl">RSVP</h2>
       <p className="mb-2">
-        Please RSVP by <span className="underline">Wednesday, October 4th</span>{" "}
+        Please RSVP by <span className="underline">Wednesday, October 5th</span>{" "}
         to let us know that you&apos;ll be there. You can update your RSVP up
         until that date.
       </p>

@@ -6,6 +6,7 @@ export default async function Login() {
   const session = await getServerSession();
 
   if (session) {
+    console.log(session.user);
     redirect("/");
   }
 

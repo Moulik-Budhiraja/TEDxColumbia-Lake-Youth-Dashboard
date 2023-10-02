@@ -51,8 +51,9 @@ model Role {
 model Permissions {
   id String @id @default(uuid())
 
-  rsvp   Boolean @default(true)
-  scanQr Boolean @default(true)
+  attendee Boolean @default(true)
+  rsvp     Boolean @default(true)
+  scanQr   Boolean @default(true)
 
   admin      Boolean @default(false)
   manageQr   Boolean @default(false)

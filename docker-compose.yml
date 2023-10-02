@@ -19,7 +19,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: dashboard:0.0.8
+    image: dashboard:0.1.0
     ports:
       - "9842:3000"
     environment:

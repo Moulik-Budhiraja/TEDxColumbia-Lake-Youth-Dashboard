@@ -56,7 +56,7 @@ export default async function Home() {
           <a href="#actions" className="underline">
             RSVP
           </a>{" "}
-          by Oct 4th to secure your spot at{" "}
+          by Oct 5th to secure your spot at{" "}
           <span className="font-black">
             TED
             <sup>X</sup>

@@ -5,6 +5,9 @@ import CopySetupURL from "./CopySetupURL";
 import Link from "next/link";
 import Filters from "./Filters";
 import { requirePermission } from "@/serverFunctions/user/requirePermission";
+import "./table.css";
+import Underline from "@/components/Underline/Underline";
+import ValidateWaiver from "./ValidateWaiver";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +15,7 @@ type Props = {
   searchParams: {
     role?: string;
     attending?: string;
+    search?: string;
   };
 };
 
@@ -19,7 +23,7 @@ export default async function Users({ searchParams }: Props) {
   await requirePermission("admin");
   console.log(searchParams);
 
-  const users = await prisma.user.findMany({
+  let users = await prisma.user.findMany({
     where: {
       role: {
         name: searchParams.role,
@@ -52,18 +56,20 @@ export default async function Users({ searchParams }: Props) {
     ],
   });
 
-  const getSetupURL = (user: (typeof users)[0]) => {
-    const token = jwt.sign(
-      {
-        id: user.id,
-        role: user.role.name,
-        iat: Date.now(),
-      },
-      process.env.NEXTAUTH_SECRET as string
-    );
+  // Filter by search (Name, Email, Affiliation)
+  if (searchParams.search) {
+    const search = searchParams.search.toLowerCase();
+    console.log(search);
 
-    return `${process.env.NEXTAUTH_URL}/auth/setup-account?token=${token}`;
-  };
+    users = users.filter(
+      (user) =>
+        `${user.firstName.toLowerCase()} ${user.lastName.toLowerCase()}`.includes(
+          search
+        ) ||
+        user.email.toLowerCase().includes(search) ||
+        user.affiliation.toLowerCase().includes(search)
+    );
+  }
 
   return (
     <div className="h-screen">
@@ -71,98 +77,147 @@ export default async function Users({ searchParams }: Props) {
 
       {/* Show a table of users */}
 
+      <Filters searchParams={searchParams}></Filters>
+
       <div className="w-full overflow-x-scroll">
-        <Filters searchParams={searchParams}></Filters>
         <table className="table-auto max-w-full">
           <thead>
             <tr>
-              <th className="px-4 py-2">First Name</th>
-              <th className="px-4 py-2">Last Name</th>
-              <th className="px-4 py-2">Email</th>
-              <th className="px-4 py-2">Affiliation</th>
-              <th className="px-4 py-2">Role</th>
-              <th className="px-4 py-2">Account Setup</th>
-              <th className="px-4 py-2">Setup</th>
-              <th className="px-4 py-2">Auth Generations</th>
-              <th className="px-4 py-2">Attending</th>
-              <th className="px-4 py-2">Date of Birth</th>
-              <th className="px-4 py-2">Phone Number</th>
-              <th className="px-4 py-2">Meal Preference</th>
-              <th className="px-4 py-2">Dietary Restrictions</th>
-              <th className="px-4 py-2">Waiver</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Affiliation</th>
+              <th>Role</th>
+              <th>Account Setup</th>
+              <th>Setup</th>
+              <th>Auth Generations</th>
+              <th>Attending</th>
+              <th>Date of Birth</th>
+              <th>Phone Number</th>
+              <th>Meal Preference</th>
+              <th>Dietary Restrictions</th>
+              <th>Waiver</th>
+              <th>Waiver Valid</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user.firstName}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user.lastName}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user.email}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user.affiliation}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user.role.name.toUpperCase()}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {!!user.auth ? "TRUE" : "FALSE"}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {!user.auth && (
-                    <CopySetupURL
-                      email={user.email}
-                      userId={user.id}
-                    ></CopySetupURL>
-                  )}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user.authGeneratations}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user.rsvp == null
-                    ? "UNKNOWN"
-                    : user.rsvp?.attending
-                    ? "TRUE"
-                    : "FALSE"}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user?.rsvp?.attending &&
-                    user?.rsvp?.dateOfBirth?.toLocaleDateString("en-us", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user?.rsvp?.attending && user?.rsvp?.phoneNumber}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user?.rsvp?.attending && user?.rsvp?.mealPreference}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user?.rsvp?.attending && user?.rsvp?.dietaryRestrictions}
-                </td>
-                <td className="border dark:border-slate-700 px-4 py-2">
-                  {user?.rsvp?.attending && !!user?.rsvp?.waiverName && (
-                    <a
-                      href={`/api/waiver/${user.id}`}
-                      className="text-sky-600 underline hover:text-sky-400 transition-all duration-300 ease-out"
-                      target="_blank"
-                    >
-                      Signed
-                    </a>
-                  )}
-                </td>
-              </tr>
-            ))}
+            {users.map((user) => {
+              const search = searchParams.search ?? "";
+
+              const fullName = `${user.firstName} ${user.lastName}`;
+              const searchIndex = fullName
+                .toLowerCase()
+                .indexOf(search.toLowerCase());
+              const searchEndIndex = searchIndex + search.length;
+
+              const emailIndex = user.email.toLowerCase().indexOf(search);
+              const affiliationIndex = user.affiliation
+                .toLowerCase()
+                .indexOf(search);
+
+              return (
+                <tr key={user.id}>
+                  <td>
+                    {searchIndex < user.firstName.length ? (
+                      <Underline
+                        start={Math.max(0, searchIndex)}
+                        length={
+                          Math.min(user.firstName.length, searchEndIndex) -
+                          Math.max(0, searchIndex)
+                        }
+                      >
+                        {user.firstName}
+                      </Underline>
+                    ) : (
+                      user.firstName
+                    )}
+                  </td>
+                  <td>
+                    {searchEndIndex > user.firstName.length ? (
+                      <Underline
+                        start={Math.max(
+                          0,
+                          searchIndex - user.firstName.length - 1
+                        )}
+                        length={
+                          searchEndIndex -
+                          Math.max(user.firstName.length + 1, searchIndex)
+                        }
+                      >
+                        {user.lastName}
+                      </Underline>
+                    ) : (
+                      user.lastName
+                    )}
+                  </td>
+                  <td>
+                    <Underline start={emailIndex} length={search.length}>
+                      {user.email}
+                    </Underline>
+                  </td>
+                  <td>
+                    <Underline start={affiliationIndex} length={search.length}>
+                      {user.affiliation}
+                    </Underline>
+                  </td>
+                  <td>{user.role.name.toUpperCase()}</td>
+                  <td>{!!user.auth ? "TRUE" : "FALSE"}</td>
+                  <td>
+                    {!user.auth && (
+                      <CopySetupURL
+                        email={user.email}
+                        userId={user.id}
+                      ></CopySetupURL>
+                    )}
+                  </td>
+                  <td>{user.authGeneratations}</td>
+                  <td>
+                    {user.rsvp == null
+                      ? "UNKNOWN"
+                      : user.rsvp?.attending
+                      ? "TRUE"
+                      : "FALSE"}
+                  </td>
+                  <td>
+                    {user?.rsvp?.attending &&
+                      user?.rsvp?.dateOfBirth?.toLocaleDateString("en-us", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                  </td>
+                  <td>{user?.rsvp?.attending && user?.rsvp?.phoneNumber}</td>
+                  <td>{user?.rsvp?.attending && user?.rsvp?.mealPreference}</td>
+                  <td>
+                    {user?.rsvp?.attending && user?.rsvp?.dietaryRestrictions}
+                  </td>
+                  <td>
+                    {user?.rsvp?.attending && !!user?.rsvp?.waiverName && (
+                      <a
+                        href={`/api/waiver/${user.id}`}
+                        className="text-sky-600 underline hover:text-sky-400 transition-all duration-300 ease-out"
+                        target="_blank"
+                      >
+                        Signed
+                      </a>
+                    )}
+                  </td>
+                  <td className="text-center">
+                    {user.rsvp?.attending && (
+                      <ValidateWaiver
+                        userId={user.id}
+                        waiverValid={user.rsvp?.waiverValidated}
+                      ></ValidateWaiver>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
+      </div>
+      <div className="text-right p-2 mb-16 md:mb-0">
+        {users.length} {users.length == 1 ? "Result" : "Results"}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import Menu from "./Menu";
 import { menuOptions } from "./menuOptions";
 import { rsvpFormSubmit } from "./rsvpFormSubmit";
 import { UserWithRsvp } from "@/types/morePrismaTypes";
+import { setValidWaiver } from "@/serverFunctions/user/setValidWaiver";
 
 type Props = {
   user: UserWithRsvp;
@@ -90,7 +91,7 @@ export default function RsvpForm({ user }: Props) {
               type="date"
               name="date-of-birth"
               id="date-of-birth"
-              className="w-40 p-2 rounded-md border border-slate-400 bg-tedx-white outline-none focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
+              className="w-40 p-2 rounded-md border border-slate-400 bg-slate-50 outline-none focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
               defaultValue={oldDateOfBirth}
               required={true}
             />
@@ -105,7 +106,7 @@ export default function RsvpForm({ user }: Props) {
               id="phone"
               name="phone"
               placeholder="(123) 456-7890"
-              className="w-40 p-2 rounded-md border border-slate-400 outline-none focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
+              className="w-40 p-2 rounded-md border border-slate-400 outline-none bg-slate-50 focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
               defaultValue={user.rsvp?.phoneNumber ?? ""}
             />
           </div>
@@ -118,7 +119,7 @@ export default function RsvpForm({ user }: Props) {
             <select
               name="meal-preference"
               id="meal"
-              className="w-64 bg-white border border-slate-400 p-2 rounded-md  mb-4 outline-none focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
+              className="w-64 bg-slate-50 border border-slate-400 p-2 rounded-md  mb-4 outline-none focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
               required={true}
               defaultValue={user.rsvp?.mealPreference ?? ""}
             >
@@ -144,7 +145,7 @@ export default function RsvpForm({ user }: Props) {
             <input
               placeholder="Vegetarian, Gluten Free, etc."
               name="dietary-restrictions"
-              className="mt-4 p-2 border border-slate-400 rounded-md outline-none focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
+              className="mt-4 p-2 bg-slate-50 border border-slate-400 rounded-md outline-none focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 dark:bg-slate-800 dark:border-slate-700 transition-all duration-300 ease-out"
               defaultValue={user.rsvp?.dietaryRestrictions ?? ""}
             />
           </div>
@@ -164,7 +165,7 @@ export default function RsvpForm({ user }: Props) {
             </p>
 
             <div className="flex gap-4 items-center mt-4 mb-8">
-              <label className="font-display p-2 bg-white border cursor-pointer border-slate-400 rounded-md outline-none hocus:bg-slate-700 hocus:border-slate-600 hocus:text-slate-100 hocus:tracking-widest dark:bg-slate-800 dark:border-slate-700 dark:hocus:border-slate-500 focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 transition-all duration-300 ease-out">
+              <label className="font-display p-2 bg-slate-50 border cursor-pointer border-slate-400 rounded-md outline-none hocus:bg-slate-700 hocus:border-slate-600 hocus:text-slate-100 hocus:tracking-widest dark:bg-slate-800 dark:border-slate-700 dark:hocus:border-slate-500 focus:outline-2 focus:outline-offset-0 focus:outline-slate-600 transition-all duration-300 ease-out">
                 Upload File
                 <input
                   className="hidden"
@@ -176,6 +177,7 @@ export default function RsvpForm({ user }: Props) {
                   onChange={(e) => {
                     console.log(e.target.files?.[0]);
                     setFilename(e.target.value.replace(/.*[\/\\]/, ""));
+                    setValidWaiver(user.id, false).then();
                   }}
                 />
               </label>

@@ -1,0 +1,22 @@
+:root {
+  --light-border: #e5e7eb;
+  --dark-border: rgb(51, 65, 85);
+}
+
+th {
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
+}
+
+td {
+  border: 1px solid var(--light-border);
+  padding: 0.5rem 1rem;
+  transition: border-color 0.3s ease-out;
+  white-space: nowrap;
+}
+
+@media (prefers-color-scheme: dark) {
+  td {
+    border-color: var(--dark-border);
+  }
+}

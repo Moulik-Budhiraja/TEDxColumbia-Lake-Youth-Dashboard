@@ -15,6 +15,8 @@ export default function CopySetupURL({ email, userId }: Props) {
 
   return (
     <Button
+      small={true}
+      noGrow={true}
       onClick={() => {
         parseEmailTemplate(userId).then((emailContent) => {
           const targetURL = new URL(`mailto:${email}`);

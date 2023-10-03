@@ -90,7 +90,8 @@ model Rsvp {
   mealPreference      String? @db.VarChar(255)
   dietaryRestrictions String? @db.VarChar(1000)
 
-  waiverName String? @db.VarChar(1000)
+  waiverName      String? @db.VarChar(1000)
+  waiverValidated Boolean @default(false)
 
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)

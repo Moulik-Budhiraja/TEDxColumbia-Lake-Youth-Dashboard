@@ -7,6 +7,7 @@ import Menu from "./Menu";
 import { menuOptions } from "./menuOptions";
 import { rsvpFormSubmit } from "./rsvpFormSubmit";
 import { UserWithRsvp } from "@/types/morePrismaTypes";
+import { setValidWaiver } from "@/serverFunctions/user/setValidWaiver";
 
 type Props = {
   user: UserWithRsvp;
@@ -176,6 +177,7 @@ export default function RsvpForm({ user }: Props) {
                   onChange={(e) => {
                     console.log(e.target.files?.[0]);
                     setFilename(e.target.value.replace(/.*[\/\\]/, ""));
+                    setValidWaiver(user.id, false).then();
                   }}
                 />
               </label>

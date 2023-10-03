@@ -7,6 +7,7 @@ import Filters from "./Filters";
 import { requirePermission } from "@/serverFunctions/user/requirePermission";
 import "./table.css";
 import Underline from "@/components/Underline/Underline";
+import ValidateWaiver from "./ValidateWaiver";
 
 export const dynamic = "force-dynamic";
 
@@ -96,6 +97,7 @@ export default async function Users({ searchParams }: Props) {
               <th>Meal Preference</th>
               <th>Dietary Restrictions</th>
               <th>Waiver</th>
+              <th>Waiver Valid</th>
             </tr>
           </thead>
           <tbody>
@@ -200,13 +202,23 @@ export default async function Users({ searchParams }: Props) {
                       </a>
                     )}
                   </td>
+                  <td className="text-center">
+                    {user.rsvp?.attending && (
+                      <ValidateWaiver
+                        userId={user.id}
+                        waiverValid={user.rsvp?.waiverValidated}
+                      ></ValidateWaiver>
+                    )}
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
-      <div className="text-right p-2 mb-16 md:mb-0">{users.length} Results</div>
+      <div className="text-right p-2 mb-16 md:mb-0">
+        {users.length} {users.length == 1 ? "Result" : "Results"}
+      </div>
     </div>
   );
 }

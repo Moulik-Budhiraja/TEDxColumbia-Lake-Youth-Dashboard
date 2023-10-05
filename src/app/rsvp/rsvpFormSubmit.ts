@@ -1,5 +1,6 @@
 "use server";
 
+import { RSVPDeadline } from "@/constants/eventDates";
 import { prisma } from "@/db";
 import { requirePermission } from "@/serverFunctions/user/requirePermission";
 import fs from "fs/promises";
@@ -9,6 +10,16 @@ export async function rsvpFormSubmit(data: FormData) {
   const user = await requirePermission("rsvp");
 
   const attending = data.get("attending") === "on";
+
+  let allowedToRsvp = false;
+
+  if (user?.allowLateRsvp || new Date() < RSVPDeadline) {
+    allowedToRsvp = true;
+  }
+
+  if (!allowedToRsvp) {
+    return redirect("/");
+  }
 
   const oldRsvp = await prisma.rsvp.findFirst({
     where: {

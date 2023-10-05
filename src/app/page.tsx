@@ -5,6 +5,7 @@ import { prisma } from "@/db";
 import Notification from "@/components/Notification/Notification";
 import StyledLink from "@/components/StyledLink/StyledLink";
 import ProfileHeader from "./ProfileHeader";
+import { RSVPDeadline } from "@/constants/eventDates";
 
 export default async function Home() {
   const user = await getSessionUser();
@@ -22,6 +23,16 @@ export default async function Home() {
       },
     },
   });
+
+  let allowedToRsvp = false;
+
+  if (user?.allowLateRsvp) {
+    allowedToRsvp = true;
+  }
+
+  if (new Date() < RSVPDeadline) {
+    allowedToRsvp = true;
+  }
 
   const userProfile = await prisma.profile.findUnique({
     where: {
@@ -51,18 +62,34 @@ export default async function Home() {
     <div className="mb-16 md:mb-0 md:flex 2xl:mx-auto 2xl:w-[60rem] 2xl:flex-col">
       <ProfileHeader user={user} profile={userProfile}></ProfileHeader>
       <div className="flex flex-col gap-4 p-4 md:w-1/2 2xl:w-full md:h-screen md:overflow-y-scroll 2xl:h-auto 2xl:overflow-y-visible transition-all duration-300 ease-out">
-        <Notification show={!userWithRsvp?.rsvp}>
-          Please{" "}
-          <a href="#actions" className="underline">
-            RSVP
-          </a>{" "}
-          by Oct 5th to secure your spot at{" "}
-          <span className="font-black">
-            TED
-            <sup>X</sup>
-          </span>{" "}
-          Columbia Lake Youth
-        </Notification>
+        {new Date() < RSVPDeadline && (
+          <Notification show={!userWithRsvp?.rsvp}>
+            Please{" "}
+            <a href="#actions" className="underline">
+              RSVP
+            </a>{" "}
+            by Oct 5th to secure your spot at{" "}
+            <span className="font-black">
+              TED
+              <sup>X</sup>
+            </span>{" "}
+            Columbia Lake Youth
+          </Notification>
+        )}
+        {user.allowLateRsvp && (
+          <Notification show={!userWithRsvp?.rsvp}>
+            You have been provided an extension to{" "}
+            <a href="#actions" className="underline">
+              RSVP
+            </a>
+            . Please do so ASAP to confirm your attendance at{" "}
+            <span className="font-black">
+              TED
+              <sup>X</sup>
+            </span>{" "}
+            Columbia Lake Youth
+          </Notification>
+        )}
         {userProfile && (
           <div className="md:flex md:flex-col md:justify-center 2xl:w-full 2xl:flex-row 2xl:justify-between 2xl:gap-8">
             <div className="2xl:w-full">
@@ -108,7 +135,9 @@ export default async function Home() {
             <h2 className="font-bold" id="actions">
               Actions
             </h2>
-            {userWithRsvp && <Rsvp user={userWithRsvp}></Rsvp>}
+            {userWithRsvp && (
+              <Rsvp user={userWithRsvp} allowedToRsvp={allowedToRsvp}></Rsvp>
+            )}
           </div>
         </div>
       </div>

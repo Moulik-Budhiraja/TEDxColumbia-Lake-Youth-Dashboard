@@ -8,6 +8,7 @@ import { requirePermission } from "@/serverFunctions/user/requirePermission";
 import "./table.css";
 import Underline from "@/components/Underline/Underline";
 import ValidateWaiver from "./ValidateWaiver";
+import LateRsvp from "./LateRsvp";
 
 export const dynamic = "force-dynamic";
 
@@ -98,6 +99,7 @@ export default async function Users({ searchParams }: Props) {
               <th>Dietary Restrictions</th>
               <th>Waiver</th>
               <th>Waiver Valid</th>
+              <th>Allow Late Rsvp</th>
             </tr>
           </thead>
           <tbody>
@@ -209,6 +211,12 @@ export default async function Users({ searchParams }: Props) {
                         waiverValid={user.rsvp?.waiverValidated}
                       ></ValidateWaiver>
                     )}
+                  </td>
+                  <td className="text-center">
+                    <LateRsvp
+                      userId={user.id}
+                      late={user.allowLateRsvp}
+                    ></LateRsvp>
                   </td>
                 </tr>
               );

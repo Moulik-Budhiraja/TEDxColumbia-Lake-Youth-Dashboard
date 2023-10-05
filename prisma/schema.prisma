@@ -25,7 +25,9 @@ model User {
   auth              Auth?
   authGeneratations Int   @default(0)
 
-  rsvp    Rsvp?
+  rsvp          Rsvp?
+  allowLateRsvp Boolean @default(false)
+
   profile Profile?
 
   createdAt DateTime @default(now()) @db.Timestamp(0)

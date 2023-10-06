@@ -86,13 +86,15 @@ export default function Rsvp({ user, allowedToRsvp }: Props) {
         </>
       )}
 
-      {allowedToRsvp && (
-        <div className="flex justify-end mt-4">
+      <div className="flex justify-end mt-4">
+        {allowedToRsvp ? (
           <Link href="/rsvp">
             <Button>{(!user.rsvp && "Start Form") || "Edit"}</Button>
           </Link>
-        </div>
-      )}
+        ) : (
+          <div></div>
+        )}
+      </div>
     </div>
   );
 }

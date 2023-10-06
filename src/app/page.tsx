@@ -40,6 +40,8 @@ export default async function Home() {
     },
   });
 
+  console.log(new Date());
+
   if (!user) {
     return (
       <div className="h-screen w-full">

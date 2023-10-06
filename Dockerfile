@@ -10,7 +10,7 @@ COPY . .
 
 EXPOSE 3000
 
-RUN apk add -U tzdata
+# RUN apk add -U tzdata
 
 ENV TZ=${TZ:-America/Toronto}
 

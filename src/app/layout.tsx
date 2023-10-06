@@ -19,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-tedx-white dark:bg-tedx-dark-bg`}>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <Providers>
           <main className="flex">
             <Sidebar />

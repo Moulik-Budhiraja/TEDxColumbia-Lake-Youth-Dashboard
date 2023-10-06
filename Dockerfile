@@ -10,6 +10,8 @@ COPY . .
 
 EXPOSE 3000
 
+RUN apk add -U tzdata
+
 RUN npm i -g prisma
 
 RUN prisma generate

@@ -133,7 +133,7 @@ export default async function Home() {
           </div>
         )}
         <div className="md:flex md:flex-col md:justify-center 2xl:w-full 2xl:flex-row 2xl:justify-between 2xl:gap-8">
-          <div>
+          <div className="w-full">
             <h2 className="font-bold" id="actions">
               Actions
             </h2>

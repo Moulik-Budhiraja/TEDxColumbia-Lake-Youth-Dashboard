@@ -10,9 +10,11 @@ COPY . .
 
 EXPOSE 3000
 
-# RUN apk add -U tzdata
 
 ENV TZ=${TZ:-America/Toronto}
+RUN apk add -U tzdata
+RUN cp /usr/share/zoneinfo/${TZ} /etc/localtime
+
 
 RUN npm i -g prisma
 

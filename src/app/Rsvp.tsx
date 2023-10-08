@@ -17,7 +17,7 @@ export default function Rsvp({ user, allowedToRsvp }: Props) {
       {allowedToRsvp && (
         <p className="mb-2">
           Please RSVP by{" "}
-          <span className="underline">Thursday, October 5th</span> to let us
+          <span className="underline">Tuesday, October 10th</span> to let us
           know that you&apos;ll be there. You can update your RSVP up until that
           date.
         </p>

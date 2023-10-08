@@ -5,23 +5,10 @@ import { prisma } from "@/db";
 import { requirePermission } from "@/serverFunctions/user/requirePermission";
 import { notFound, redirect } from "next/navigation";
 import { RSVPDeadline } from "@/constants/eventDates";
+import { isAllowedToRsvp } from "@/serverFunctions/user/isAllowedToRsvp";
 
 export default async function Home() {
   const user = await requirePermission("scanQr");
-
-  let allowedToRsvp = false;
-
-  if (user?.allowLateRsvp) {
-    allowedToRsvp = true;
-  }
-
-  if (new Date() < RSVPDeadline) {
-    allowedToRsvp = true;
-  }
-
-  if (!allowedToRsvp) {
-    return redirect("/");
-  }
 
   const userWithRsvp = await prisma.user.findUnique({
     where: {
@@ -39,6 +26,12 @@ export default async function Home() {
 
   if (!userWithRsvp) {
     return notFound();
+  }
+
+  const allowedToRsvp = await isAllowedToRsvp(userWithRsvp);
+
+  if (!allowedToRsvp) {
+    return redirect("/");
   }
 
   return (

@@ -5,7 +5,9 @@ import { prisma } from "@/db";
 import Notification from "@/components/Notification/Notification";
 import StyledLink from "@/components/StyledLink/StyledLink";
 import ProfileHeader from "./ProfileHeader";
-import { RSVPDeadline } from "@/constants/eventDates";
+import { RSVPDeadline, RSVPWaitlist1Deadline } from "@/constants/eventDates";
+import { isAllowedToRsvp } from "@/serverFunctions/user/isAllowedToRsvp";
+import SuccessNotification from "@/components/Notification/SuccessNotification";
 
 export default async function Home() {
   const user = await getSessionUser();
@@ -24,15 +26,7 @@ export default async function Home() {
     },
   });
 
-  let allowedToRsvp = false;
-
-  if (user?.allowLateRsvp) {
-    allowedToRsvp = true;
-  }
-
-  if (new Date() < RSVPDeadline) {
-    allowedToRsvp = true;
-  }
+  const allowedToRsvp = await isAllowedToRsvp(userWithRsvp);
 
   const userProfile = await prisma.profile.findUnique({
     where: {
@@ -64,13 +58,14 @@ export default async function Home() {
     <div className="mb-16 md:mb-0 md:flex 2xl:mx-auto 2xl:w-[60rem] 2xl:flex-col">
       <ProfileHeader user={user} profile={userProfile}></ProfileHeader>
       <div className="flex flex-col gap-4 p-4 md:w-1/2 2xl:w-full md:h-screen md:overflow-y-scroll 2xl:h-auto 2xl:overflow-y-visible transition-all duration-300 ease-out">
-        {new Date() < RSVPDeadline && (
+        {(new Date() < RSVPDeadline ||
+          (user.waitlisted1 && new Date() < RSVPWaitlist1Deadline)) && (
           <Notification show={!userWithRsvp?.rsvp}>
             Please{" "}
             <a href="#actions" className="underline">
               RSVP
             </a>{" "}
-            by Oct 5th to secure your spot at{" "}
+            by Oct 10th to secure your spot at{" "}
             <span className="font-black">
               TED
               <sup>X</sup>
@@ -91,6 +86,17 @@ export default async function Home() {
             </span>{" "}
             Columbia Lake Youth
           </Notification>
+        )}
+        {!allowedToRsvp && userWithRsvp?.rsvp?.attending && (
+          <SuccessNotification>
+            You've secured your spot at{" "}
+            <span className="font-black">
+              TED
+              <sup>X</sup>
+            </span>{" "}
+            Columbia Lake Youth. Can't wait to see you there! Your ticket will
+            be available in the next few days.
+          </SuccessNotification>
         )}
         {userProfile && (
           <div className="md:flex md:flex-col md:justify-center 2xl:w-full 2xl:flex-row 2xl:justify-between 2xl:gap-8">

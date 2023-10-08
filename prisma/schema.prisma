@@ -27,6 +27,7 @@ model User {
 
   rsvp          Rsvp?
   allowLateRsvp Boolean @default(false)
+  waitlisted1   Boolean @default(false)
 
   profile Profile?
 

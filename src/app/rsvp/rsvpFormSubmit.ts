@@ -2,6 +2,7 @@
 
 import { RSVPDeadline } from "@/constants/eventDates";
 import { prisma } from "@/db";
+import { isAllowedToRsvp } from "@/serverFunctions/user/isAllowedToRsvp";
 import { requirePermission } from "@/serverFunctions/user/requirePermission";
 import fs from "fs/promises";
 import { redirect } from "next/navigation";
@@ -11,11 +12,7 @@ export async function rsvpFormSubmit(data: FormData) {
 
   const attending = data.get("attending") === "on";
 
-  let allowedToRsvp = false;
-
-  if (user?.allowLateRsvp || new Date() < RSVPDeadline) {
-    allowedToRsvp = true;
-  }
+  const allowedToRsvp = await isAllowedToRsvp(user);
 
   if (!allowedToRsvp) {
     return redirect("/");

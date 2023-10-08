@@ -89,13 +89,13 @@ export default async function Home() {
         )}
         {!allowedToRsvp && userWithRsvp?.rsvp?.attending && (
           <SuccessNotification>
-            You've secured your spot at{" "}
+            You&apos;ve secured your spot at{" "}
             <span className="font-black">
               TED
               <sup>X</sup>
             </span>{" "}
-            Columbia Lake Youth. Can't wait to see you there! Your ticket will
-            be available in the next few days.
+            Columbia Lake Youth. Can&apos;t wait to see you there! Your ticket
+            will be available in the next few days.
           </SuccessNotification>
         )}
         {userProfile && (

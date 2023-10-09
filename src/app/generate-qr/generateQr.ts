@@ -9,10 +9,8 @@ export async function generateQr() {
   await requirePermission("manageQr");
 
   const id = crypto.randomUUID();
-  const token = jwt.sign({ id }, process.env.NEXTAUTH_SECRET as string);
 
-  const url = new URL("https://dash.tedxcolumbialakeyouth.com/qr");
-  url.searchParams.append("token", token);
+  const url = new URL(`https://dash.tedxcolumbialakeyouth.com/qr/${id}`);
 
   const qr = await QRCode.toDataURL("URL:" + url.toString(), {
     errorCorrectionLevel: "M",

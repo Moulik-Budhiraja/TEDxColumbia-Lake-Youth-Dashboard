@@ -94,8 +94,12 @@ export default async function Home() {
               TED
               <sup>X</sup>
             </span>{" "}
-            Columbia Lake Youth. Can&apos;t wait to see you there! Your ticket
-            will be available in the next few days.
+            Columbia Lake Youth. Can&apos;t wait to see you there! In the
+            meantime, check out{" "}
+            <a href="/ticket" className="underline">
+              your ticket
+            </a>
+            .
           </SuccessNotification>
         )}
         {userProfile && (

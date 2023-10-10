@@ -1,6 +1,9 @@
+"use client";
+
 import IconEdit from "@/components/Icons/IconEdit";
 import IconInstagram from "@/components/Icons/IconInstagram";
 import IconLinkedin from "@/components/Icons/IconLinkedin";
+import IconShare from "@/components/Icons/IconShare";
 import IconTwitter from "@/components/Icons/IconTwitter";
 import { UserWithRole } from "@/types/morePrismaTypes";
 import { Profile } from "@prisma/client";
@@ -9,9 +12,14 @@ import Link from "next/link";
 type Props = {
   user: UserWithRole;
   profile: Profile | null;
+  editable?: boolean;
 };
 
-export default function ProfileHeader({ user, profile }: Props) {
+export default function ProfileHeader({
+  user,
+  profile,
+  editable = true,
+}: Props) {
   const baseColor =
     (user.role.name === "admin" && "blue") ||
     (user.role.name === "speaker" && "red") ||
@@ -19,7 +27,7 @@ export default function ProfileHeader({ user, profile }: Props) {
 
   return (
     <div
-      className={`flex flex-col justify-start items-center gap-4 h-fit pt-12 drop-shadow-xl md:h-screen md:w-1/2 md:justify-center 2xl:w-full 2xl:h-80 ${
+      className={`flex flex-col justify-start relative items-center gap-4 h-fit pt-12 drop-shadow-xl md:h-screen md:w-1/2 md:justify-center 2xl:w-full 2xl:h-80 ${
         baseColor === "blue" && "bg-blue-300"
       } ${baseColor === "red" && "bg-red-300"} ${
         baseColor === "teal" && "bg-teal-300"
@@ -94,19 +102,44 @@ export default function ProfileHeader({ user, profile }: Props) {
           {user.role.name?.at(0)?.toUpperCase() + user.role.name?.substring(1)}
         </div>
       </div>
-      <Link href={`/profile/edit`}>
-        <div
-          className={`opacity-60 cursor-pointer hocus:opacity-100 transition-all duration-300 ease-out absolute top-4 right-4`}
-        >
-          <IconEdit
-            className={`w-8 h-8 stroke-none ${
-              baseColor === "blue" && "fill-blue-600"
-            } ${baseColor === "red" && "fill-red-600"} ${
-              baseColor === "teal" && "fill-teal-600"
-            }`}
-          ></IconEdit>
-        </div>
-      </Link>
+      <div
+        className={`opacity-60 cursor-pointer hocus:opacity-100 transition-all duration-300 ease-out absolute top-4 left-4`}
+        tabIndex={0}
+        onClick={async () => {
+          await navigator.share({
+            title: `${user.firstName} ${user.lastName} Profile | TEDxColumbia Lake Youth`,
+            url: `${
+              window.location.origin
+            }/profile/${user.firstName.toLowerCase()}-${user.lastName
+              .toLowerCase()
+              .replace(/ /g, "-")}}`,
+          });
+        }}
+      >
+        <IconShare
+          className={`w-8 h-8 stroke-none ${
+            baseColor === "blue" && "fill-blue-600"
+          } ${baseColor === "red" && "fill-red-600"} ${
+            baseColor === "teal" && "fill-teal-600"
+          }`}
+        ></IconShare>
+      </div>
+
+      {editable && (
+        <Link href={`/profile/edit`}>
+          <div
+            className={`opacity-60 cursor-pointer hocus:opacity-100 transition-all duration-300 ease-out absolute top-4 right-4`}
+          >
+            <IconEdit
+              className={`w-8 h-8 stroke-none ${
+                baseColor === "blue" && "fill-blue-600"
+              } ${baseColor === "red" && "fill-red-600"} ${
+                baseColor === "teal" && "fill-teal-600"
+              }`}
+            ></IconEdit>
+          </div>
+        </Link>
+      )}
     </div>
   );
 }

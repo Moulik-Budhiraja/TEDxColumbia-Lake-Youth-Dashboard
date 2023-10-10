@@ -5,7 +5,7 @@ import IconHome from "@/components/Icons/IconHome";
 import IconNetworking from "@/components/Icons/IconNetworking";
 import { useVisibility } from "@/hooks/useVisibility/useVisibility";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SidebarItem from "./SidebarItem";
 import IconQrcode from "@/components/Icons/IconQrcode";
 import { useUser } from "@/hooks/useUser/useUser";
@@ -13,12 +13,23 @@ import IconLogin from "@/components/Icons/IconLogin";
 import { signOut } from "next-auth/react";
 import IconKey from "@/components/Icons/IconKey";
 import IconMail from "@/components/Icons/IconMail";
+import { isAllowedToRsvp } from "@/serverFunctions/user/isAllowedToRsvp";
+import IconTicket from "@/components/Icons/IconTicket";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
   const [visible, fadeIn] = useVisibility(open);
+  const [showTicket, setShowTicket] = useState(false);
 
-  const user = useUser();
+  const user = useUser(true);
+
+  useEffect(() => {
+    if (user) {
+      isAllowedToRsvp(user).then((allowed) => {
+        return setShowTicket(user?.rsvp && !allowed ? true : false);
+      });
+    }
+  }, [user]);
 
   return (
     <>
@@ -48,7 +59,7 @@ export default function Sidebar() {
             <br />
             <span className="font-bold">Youth</span>
           </div>
-          <div className="flex flex-col items-center text-xl mt-8">
+          <div className="flex flex-col items-center text-xl mt-4 overflow-y-auto overflow-x-hidden">
             <ul className="flex flex-col gap-2">
               <Link href={"/"} onClick={() => setOpen(false)}>
                 <SidebarItem
@@ -64,6 +75,15 @@ export default function Sidebar() {
                   text="Networking"
                 ></SidebarItem>
               </Link> */}
+              {showTicket && (
+                <Link href={"/ticket"} onClick={() => setOpen(false)}>
+                  <SidebarItem
+                    fadeIn={fadeIn}
+                    icon={<IconTicket className="fill-tedx-white" />}
+                    text="Ticket"
+                  ></SidebarItem>
+                </Link>
+              )}
 
               {user?.role.permissions.manageQr && (
                 <>

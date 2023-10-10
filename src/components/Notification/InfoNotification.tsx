@@ -9,7 +9,7 @@ type Props = {
   onClose?: () => void;
 };
 
-export default function SuccessNotification({
+export default function InfoNotification({
   show = true,
   children,
   onClose,
@@ -19,7 +19,7 @@ export default function SuccessNotification({
 
   return visible ? (
     <div
-      className={`flex items-center p-4 mt-2 rounded-lg text-green-800 border-t-4 border-green-400 bg-green-100 dark:text-green-400 dark:bg-slate-800 dark:border-green-700 ${
+      className={`flex items-center p-4 mt-2 rounded-lg text-teal-800 border-t-4 border-teal-400 bg-teal-100 dark:text-teal-400 dark:bg-slate-800 dark:border-teal-700 ${
         !fadeIn && "opacity-0"
       }  transition-all duration-300 ease-out`}
       role="alert"
@@ -36,7 +36,7 @@ export default function SuccessNotification({
       <div className="ml-3 text-sm font-medium">{children}</div>
       <button
         type="button"
-        className="ml-auto -mx-1.5 -my-1.5 bg-green-100 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 dark:bg-slate-800 dark:text-green-400 dark:hover:bg-slate-700 inline-flex items-center justify-center h-8 w-8 transition-all duration-300 ease-out"
+        className="ml-auto -mx-1.5 -my-1.5 bg-teal-100 text-teal-500 rounded-lg focus:ring-2 focus:ring-teal-400 p-1.5 hover:bg-teal-200 dark:bg-slate-800 dark:text-teal-400 dark:hover:bg-slate-700 inline-flex items-center justify-center h-8 w-8 transition-all duration-300 ease-out"
         aria-label="Close"
         onClick={() => {
           onClose?.();

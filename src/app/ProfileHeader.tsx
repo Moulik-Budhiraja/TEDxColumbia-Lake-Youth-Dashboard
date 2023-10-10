@@ -8,6 +8,7 @@ import IconTwitter from "@/components/Icons/IconTwitter";
 import { UserWithRole } from "@/types/morePrismaTypes";
 import { Profile } from "@prisma/client";
 import Link from "next/link";
+import { useState } from "react";
 
 type Props = {
   user: UserWithRole;
@@ -20,6 +21,8 @@ export default function ProfileHeader({
   profile,
   editable = true,
 }: Props) {
+  const [showCopied, setShowCopied] = useState(false);
+
   const baseColor =
     (user.role.name === "admin" && "blue") ||
     (user.role.name === "speaker" && "red") ||
@@ -106,14 +109,31 @@ export default function ProfileHeader({
         className={`opacity-60 cursor-pointer hocus:opacity-100 transition-all duration-300 ease-out absolute top-4 left-4`}
         tabIndex={0}
         onClick={async () => {
-          await navigator.share({
-            title: `${user.firstName} ${user.lastName} Profile | TEDxColumbia Lake Youth`,
-            url: `${
-              window.location.origin
-            }/profile/${user.firstName.toLowerCase()}-${user.lastName
-              .toLowerCase()
-              .replace(/ /g, "-")}}`,
-          });
+          try {
+            await navigator.share({
+              title: `${user.firstName} ${user.lastName}'s Profile | TEDxColumbia Lake Youth`,
+              url: `${
+                window.location.origin
+              }/profile/${user.firstName.toLowerCase()}-${user.lastName
+                .toLowerCase()
+                .replace(/ /g, "-")}`,
+            });
+          } catch (err) {
+            // Copy to clipboard fallback
+            await navigator.clipboard.writeText(
+              `${
+                window.location.origin
+              }/profile/${user.firstName.toLowerCase()}-${user.lastName
+                .toLowerCase()
+                .replace(/ /g, "-")}`
+            );
+
+            setShowCopied(true);
+
+            setTimeout(() => {
+              setShowCopied(false);
+            }, 2000);
+          }
         }}
       >
         <IconShare
@@ -123,6 +143,21 @@ export default function ProfileHeader({
             baseColor === "teal" && "fill-teal-600"
           }`}
         ></IconShare>
+        <div
+          className={`absolute top-0 left-12 py-1 px-2 rounded-md ${
+            baseColor === "blue" &&
+            "bg-blue-500 text-blue-950 before:bg-blue-500"
+          } ${
+            baseColor === "red" && "bg-red-500 text-red-950 before:bg-red-500"
+          } ${
+            baseColor === "teal" &&
+            "bg-teal-500 text-teal-950 before:bg-teal-500"
+          } before:conetnt-[''] before:w-2 before:h-2 before:rotate-45 before:absolute before:-left-1 before:top-1/2 before:-translate-y-1/2 transition-all duration-300 ease-out ${
+            showCopied ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          Copied!
+        </div>
       </div>
 
       {editable && (

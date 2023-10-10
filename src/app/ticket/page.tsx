@@ -64,8 +64,8 @@ export default async function TicketPage({}: Props) {
           <div>
             <div className="font-bold">Parking</div>
             <div className="md:max-w-xs">
-              The recommended place to park is Lot X. It's about a 10 minute
-              walk to the venue, but it is free on weekends.
+              The recommended place to park is Lot X. It&apos;s about a 10
+              minute walk to the venue, but it is free on weekends.
               <br />
               <br />
               Lots N, Q and R are a little closer, but they are $5 pay and

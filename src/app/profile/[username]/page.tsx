@@ -20,6 +20,10 @@ export default async function UserProfile({ params }: Props) {
     { firstName: string; lastName: string }[]
   >`SELECT firstName, lastName FROM User WHERE CONCAT_WS(" ", firstName, lastName) = ${name}`;
 
+  if (fullName.length === 0) {
+    return notFound();
+  }
+
   const user = await prisma.user.findFirst({
     where: {
       firstName: fullName[0].firstName,

@@ -144,7 +144,7 @@ export default function ProfileHeader({
           }`}
         ></IconShare>
         <div
-          className={`absolute top-0 left-12 py-1 px-2 rounded-md ${
+          className={`absolute top-0 left-12 py-1 px-2 w-28 text-center rounded-md ${
             baseColor === "blue" &&
             "bg-blue-500 text-blue-950 before:bg-blue-500"
           } ${
@@ -156,7 +156,7 @@ export default function ProfileHeader({
             showCopied ? "opacity-100" : "opacity-0"
           }`}
         >
-          Copied!
+          Copied Link!
         </div>
       </div>
 

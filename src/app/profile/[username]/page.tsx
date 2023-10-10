@@ -60,8 +60,9 @@ export default async function UserProfile({ params }: Props) {
       <div className="flex flex-col gap-4 p-4 md:w-1/2 2xl:w-full md:h-screen md:overflow-y-scroll 2xl:h-auto 2xl:overflow-y-visible transition-all duration-300 ease-out">
         {user.id === requestUser.id && (
           <Notification>
-            This is your public profile. You can share this link with others to
-            show them your profile. To edit your profile, do so from the{" "}
+            This is your public profile. You can share this link with other
+            attendees to show them your profile. To edit your profile, do so
+            from the{" "}
             <a href="/" className="underline">
               home page
             </a>
@@ -71,14 +72,26 @@ export default async function UserProfile({ params }: Props) {
 
         {userProfile && (
           <div className="md:flex md:flex-col md:justify-center 2xl:w-full 2xl:flex-row 2xl:justify-between 2xl:gap-8">
-            <div className="2xl:w-full">
-              <h2 className="font-bold">About Me</h2>
-              <div className="pl-2 flex flex-col gap-2">
-                {userProfile.aboutMe?.split("\n").map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
+            {userProfile.aboutMe && (
+              <div className="2xl:w-full">
+                <h2 className="font-bold">About Me</h2>
+                <div className="pl-2 flex flex-col gap-2">
+                  {userProfile.aboutMe?.split("\n").map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+            {userProfile.talkDescription && userProfile.talkTitle && (
+              <div className="2xl:w-full mt-4">
+                <h2 className="font-bold">{userProfile.talkTitle}</h2>
+                <div className="pl-2 flex flex-col gap-2">
+                  {userProfile.talkDescription?.split("\n").map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+            )}
             {((userProfile.link1Name && userProfile.link1Url) ||
               (userProfile.link2Name && userProfile.link2Url)) && (
               <div className="2xl:w-full">

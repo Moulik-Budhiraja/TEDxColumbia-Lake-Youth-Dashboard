@@ -5,6 +5,7 @@ import { Prisma, User } from "@prisma/client";
 
 type GetUserOptions = {
   include_auth: boolean;
+  include_rsvp?: boolean;
 } & (
   | {
       by: "email";
@@ -29,6 +30,7 @@ async function getUser(options: GetUserOptions) {
           },
         },
         auth: options.include_auth,
+        rsvp: options.include_rsvp,
       },
     });
   } else {
@@ -43,6 +45,7 @@ async function getUser(options: GetUserOptions) {
           },
         },
         auth: options.include_auth,
+        rsvp: options.include_rsvp,
       },
     });
   }

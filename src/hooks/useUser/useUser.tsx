@@ -1,10 +1,23 @@
 import { getUser } from "@/serverFunctions/user/getUser";
-import { UserWithRole } from "@/types/morePrismaTypes";
+import { UserWithRole, UserWithRsvp } from "@/types/morePrismaTypes";
+import { Prisma } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-export function useUser() {
-  const [user, setUser] = useState<UserWithRole>();
+type UserHook = Prisma.UserGetPayload<{
+  include: {
+    role: {
+      include: {
+        permissions: true;
+      };
+    };
+    auth: boolean;
+    rsvp: boolean;
+  };
+}>;
+
+export function useUser(includeRsvp: boolean = false) {
+  const [user, setUser] = useState<UserHook>();
   const { data: session, status } = useSession();
 
   useEffect(() => {
@@ -13,6 +26,7 @@ export function useUser() {
         by: "email",
         email: session.user.email,
         include_auth: false,
+        include_rsvp: includeRsvp,
       }).then((user) => {
         user && setUser(user);
       });

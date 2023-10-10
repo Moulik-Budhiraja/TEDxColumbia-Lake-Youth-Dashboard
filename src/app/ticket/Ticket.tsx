@@ -2,14 +2,14 @@ import { requirePermission } from "@/serverFunctions/user/requirePermission";
 import "./ticket.css";
 import Image from "next/image";
 import QRCode from "qrcode";
+import { UserWithRole } from "@/types/morePrismaTypes";
 
 type Props = {
   className?: string;
+  user: UserWithRole;
 };
 
-export default async function Ticket({ className }: Props) {
-  const user = await requirePermission("attendee");
-
+export default async function Ticket({ className, user }: Props) {
   const qr = await QRCode.toDataURL(user.id, {
     errorCorrectionLevel: "M",
     type: "image/png",

@@ -2,12 +2,35 @@ import Header from "@/components/Header/Header";
 import Ticket from "./Ticket";
 // import Notification from "@/components/Notification/Notification";
 import InfoNotification from "@/components/Notification/InfoNotification";
+import { requirePermission } from "@/serverFunctions/user/requirePermission";
+import { prisma } from "@/db";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 type Props = {};
 
-export default async function Users({}: Props) {
+export default async function TicketPage({}: Props) {
+  const user = await requirePermission("attendee");
+
+  const userWithRsvp = await prisma.user.findUnique({
+    where: {
+      id: user?.id ?? "",
+    },
+    include: {
+      rsvp: true,
+      role: {
+        include: {
+          permissions: true,
+        },
+      },
+    },
+  });
+
+  if (!userWithRsvp?.rsvp?.attending) {
+    return redirect("/");
+  }
+
   return (
     <div className="h-[100svh] overflow-hidden relative">
       <Header
@@ -41,7 +64,7 @@ export default async function Users({}: Props) {
         </div>
       </div>
 
-      <Ticket></Ticket>
+      <Ticket user={user}></Ticket>
     </div>
   );
 }

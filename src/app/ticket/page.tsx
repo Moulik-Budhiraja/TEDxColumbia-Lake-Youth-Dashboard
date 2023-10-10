@@ -32,7 +32,7 @@ export default async function TicketPage({}: Props) {
   }
 
   return (
-    <div className="h-[100svh] overflow-hidden relative">
+    <div className="h-[100svh] relative">
       <Header
         title="Ticket"
         description="You'll need your ticket and a piece of ID to check in on event day."
@@ -47,7 +47,7 @@ export default async function TicketPage({}: Props) {
 
       <div className="p-4">
         <h2 className="font-bold text-2xl">Event Details</h2>
-        <div className="mt-2 flex flex-col gap-2">
+        <div className="mt-2 flex flex-col gap-2 overflow-y-scroll mb-52 md:mb-0">
           <div>
             <div className="font-bold">Location</div>
             <div>
@@ -59,6 +59,17 @@ export default async function TicketPage({}: Props) {
             <div className="font-bold">Time</div>
             <div>
               October 14th, 2023 <br /> 10:00 a.m. - 5:30 p.m.
+            </div>
+          </div>
+          <div>
+            <div className="font-bold">Parking</div>
+            <div className="md:max-w-xs">
+              The recommended place to park is Lot X. It's about a 10 minute
+              walk to the venue, but it is free on weekends.
+              <br />
+              <br />
+              Lots N, Q and R are a little closer, but they are $5 pay and
+              display lots, even on weekends. Lot M is $6.
             </div>
           </div>
         </div>

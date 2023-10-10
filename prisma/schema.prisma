@@ -106,7 +106,9 @@ model Profile {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   userId String @unique
 
-  aboutMe String? @db.VarChar(10000)
+  aboutMe         String? @db.VarChar(10000)
+  talkTitle       String? @db.VarChar(500)
+  talkDescription String? @db.Text
 
   instagramHandle String? @db.VarChar(255)
   twitterHandle   String? @db.VarChar(255)

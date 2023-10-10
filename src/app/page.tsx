@@ -104,14 +104,26 @@ export default async function Home() {
         )}
         {userProfile && (
           <div className="md:flex md:flex-col md:justify-center 2xl:w-full 2xl:flex-row 2xl:justify-between 2xl:gap-8">
-            <div className="2xl:w-full">
-              <h2 className="font-bold">About Me</h2>
-              <div className="pl-2 flex flex-col gap-2">
-                {userProfile.aboutMe?.split("\n").map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
+            {userProfile.aboutMe && (
+              <div className="2xl:w-full">
+                <h2 className="font-bold">About Me</h2>
+                <div className="pl-2 flex flex-col gap-2">
+                  {userProfile.aboutMe?.split("\n").map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+            {userProfile.talkDescription && userProfile.talkTitle && (
+              <div className="2xl:w-full mt-4">
+                <h2 className="font-bold">{userProfile.talkTitle}</h2>
+                <div className="pl-2 flex flex-col gap-2">
+                  {userProfile.talkDescription?.split("\n").map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+            )}
             {((userProfile.link1Name && userProfile.link1Url) ||
               (userProfile.link2Name && userProfile.link2Url)) && (
               <div className="2xl:w-full">

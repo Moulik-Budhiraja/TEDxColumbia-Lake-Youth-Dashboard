@@ -38,6 +38,8 @@ export default async function UserProfile({ params }: Props) {
     },
   });
 
+  
+
   const userAuth = await prisma.auth.findUnique({
     where: {
       userId: user?.id ?? "",

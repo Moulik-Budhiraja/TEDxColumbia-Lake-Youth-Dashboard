@@ -68,8 +68,8 @@ export default async function TicketPage({}: Props) {
               minute walk to the venue, but it is free on weekends.
               <br />
               <br />
-              Lots N, Q and R are a little closer, but they are $5 pay and
-              display lots, even on weekends. Lot M is $6.
+              Lot N is a little closer, but is a $5 pay and display lot, even on
+              weekends. Lot M is $6.
             </div>
           </div>
         </div>

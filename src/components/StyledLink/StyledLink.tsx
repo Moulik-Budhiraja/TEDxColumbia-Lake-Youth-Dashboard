@@ -5,7 +5,7 @@ import Link from "next/link";
 type Props = {
   href: string;
   children: React.ReactNode;
-  className: string;
+  className?: string;
   target?: string;
   onClick?: () => void;
 };

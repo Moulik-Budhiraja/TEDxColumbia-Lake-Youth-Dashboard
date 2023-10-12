@@ -9,6 +9,7 @@ import "./table.css";
 import Underline from "@/components/Underline/Underline";
 import ValidateWaiver from "./ValidateWaiver";
 import LateRsvp from "./LateRsvp";
+import BadgeLinked from "./BadgeLinked";
 
 export const dynamic = "force-dynamic";
 
@@ -100,6 +101,7 @@ export default async function Users({ searchParams }: Props) {
               <th>Waiver</th>
               <th>Waiver Valid</th>
               <th>Allow Late Rsvp</th>
+              <th>Badge</th>
             </tr>
           </thead>
           <tbody>
@@ -217,6 +219,9 @@ export default async function Users({ searchParams }: Props) {
                       userId={user.id}
                       late={user.allowLateRsvp}
                     ></LateRsvp>
+                  </td>
+                  <td className="text-center">
+                    <BadgeLinked user={user}></BadgeLinked>
                   </td>
                 </tr>
               );

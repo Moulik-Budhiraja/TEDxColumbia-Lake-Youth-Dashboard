@@ -87,11 +87,11 @@ export default function Sidebar() {
 
               {user?.role.permissions.manageQr && (
                 <>
-                  <Link href={"/generate-qr"} onClick={() => setOpen(false)}>
+                  <Link href={"/check-in"} onClick={() => setOpen(false)}>
                     <SidebarItem
                       fadeIn={fadeIn}
                       icon={<IconQrcode className="fill-tedx-white" />}
-                      text="Generate QR"
+                      text="QR Management"
                     ></SidebarItem>
                   </Link>
                 </>

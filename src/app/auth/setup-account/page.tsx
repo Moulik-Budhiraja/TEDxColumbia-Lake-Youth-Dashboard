@@ -39,6 +39,7 @@ export default async function SetupAccount({ searchParams }: Props) {
     return redirect("/");
   }
   if (user.auth) {
+    console.log("User already has an account", user.auth.id);
     return redirect("/auth/login");
   }
 

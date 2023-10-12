@@ -14,11 +14,9 @@ type Props = {
 export default async function UserProfile({ params }: Props) {
   const requestUser = await requirePermission("attendee");
 
-  const name = params.username.replace(/-/g, " ");
-
   const fullName = await prisma.$queryRaw<
     { firstName: string; lastName: string }[]
-  >`SELECT firstName, lastName FROM User WHERE CONCAT_WS(" ", firstName, lastName) = ${name}`;
+  >`SELECT firstName, lastName FROM User WHERE CONCAT_WS("-", firstName, lastName) = ${params.username}`;
 
   if (fullName.length === 0) {
     return notFound();
@@ -37,8 +35,6 @@ export default async function UserProfile({ params }: Props) {
       },
     },
   });
-
-  
 
   const userAuth = await prisma.auth.findUnique({
     where: {

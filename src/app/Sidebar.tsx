@@ -35,7 +35,7 @@ export default function Sidebar() {
     <>
       <nav
         className={`${
-          fadeIn ? "w-3/4" : "w-16"
+          fadeIn ? "w-[20rem]" : "w-16"
         } fixed bg-tedx-blue h-[100dvh] border-r border-slate-900 max-w-xs text-tedx-white transition-[width] duration-300 ease-out cursor-default z-40`}
       >
         <IconHamburger

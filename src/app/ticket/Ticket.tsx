@@ -20,7 +20,7 @@ export default async function Ticket({ className, user }: Props) {
     <>
       {" "}
       <div
-        className={`${className} fill-white w-3/4 max-w-xs fixed ml-8 left-1/2 md:left-3/4 -translate-x-1/2 bottom-0 translate-y-1/2 drop-shadow-2xl brightness-100 dark:brightness-90 hocus:brightness-100 hocus:-translate-y-1/3 md:hocus:translate-y-1/2 md:hocus:bottom-1/2 transition-all duration-500 ease-in-out peer/ticket z-10`}
+        className={`${className} fill-white w-3/4 max-w-xs fixed ml-8 left-1/2 md:left-3/4 -translate-x-1/2 bottom-0 translate-y-1/2 drop-shadow-2xl brightness-100 dark:brightness-90 hocus:brightness-100 focus:-translate-y-[calc(50svh-50%)] md:hover:-translate-y-12 md:focus:-translate-y-[calc(50vh-50%)] md:focus:left-1/2 transition-all duration-500 ease-in-out peer/ticket z-10`}
         tabIndex={0}
       >
         <svg

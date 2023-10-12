@@ -8,7 +8,7 @@ export default function LoginForm() {
   return (
     <form
       method="post"
-      className={`flex mx-auto flex-col gap-4 items-center max-w-sm`}
+      className={`flex mx-auto flex-col gap-4 items-center w-full max-w-[17rem]`}
       onSubmit={async (e) => {
         e.preventDefault();
 
@@ -19,8 +19,18 @@ export default function LoginForm() {
         });
       }}
     >
-      <Input placeholder="Email" type="email" name="username"></Input>
-      <Input placeholder="Password" name="password" type="password"></Input>
+      <Input
+        placeholder="Email"
+        type="email"
+        name="username"
+        className="w-full"
+      ></Input>
+      <Input
+        placeholder="Password"
+        name="password"
+        type="password"
+        className="w-full"
+      ></Input>
       <Button className="w-[10rem]">Login</Button>
     </form>
   );

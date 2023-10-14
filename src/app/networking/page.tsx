@@ -93,7 +93,10 @@ export default async function Networking() {
       <div className="font-bold ml-2">Leaderboard</div>
       <div className="border-t-2 border-slate-500">
         {allPoints.map((user) => (
-          <div className="border-b-2 border-slate-500 flex gap-2 items-center">
+          <div
+            className="border-b-2 border-slate-300 dark:border-slate-500 flex gap-2 items-center"
+            key={user.id}
+          >
             <div
               className={`flex items-center justify-center p-2 m-2 rounded-full w-10 h-10 ${
                 user.role.name === "admin" && "text-blue-950 bg-blue-400"

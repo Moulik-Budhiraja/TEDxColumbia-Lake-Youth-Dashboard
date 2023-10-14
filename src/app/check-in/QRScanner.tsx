@@ -161,8 +161,8 @@ export default function QRScanner() {
               <div className="text-2xl font-bold">{`${targetUser.firstName} ${targetUser.lastName}`}</div>
               <div className="opacity-60">
                 {"| " +
-                  targetUser.role.name.at(0)?.toUpperCase() +
-                  targetUser.role.name.slice(1)}
+                  targetUser?.role?.name.at(0)?.toUpperCase() +
+                  targetUser?.role?.name.slice(1)}
               </div>
             </div>
             <div className="-mt-1 text-sm opacity-70">{targetUser.email}</div>

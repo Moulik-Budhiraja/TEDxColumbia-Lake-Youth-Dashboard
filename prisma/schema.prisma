@@ -28,11 +28,25 @@ model User {
   rsvp          Rsvp?
   allowLateRsvp Boolean @default(false)
   waitlisted1   Boolean @default(false)
+  claimedMeal   Boolean @default(false)
 
   profile Profile?
 
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(0)
+
+  scannedBy Scans[] @relation("scannedBy")
+  scanned   Scans[] @relation("scanned")
+}
+
+model Scans {
+  id String @id @default(uuid())
+
+  scannerId String
+  scanner   User   @relation(name: "scannedBy", fields: [scannerId], references: [id])
+
+  scannedId String
+  scanned   User   @relation(name: "scanned", fields: [scannedId], references: [id])
 }
 
 model Role {

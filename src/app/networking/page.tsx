@@ -43,14 +43,34 @@ export default async function Networking() {
 
   const allPoints = allUsers
     .map((user) => {
-      const scanned = allScans.filter((scan) => scan.scannerId === user.id);
+      const scanned = Array.from(
+        new Set(
+          allScans.filter(
+            (scan) => scan.scannerId === user.id && scan.scannedId !== user.id
+          )
+        )
+      );
 
       const scannedSpeakers = scanned.filter((scan) =>
         allSpeakerIds.includes(scan.scannedId)
       );
 
+      const filteredScans = Array.from(
+        new Set(
+          allScans.filter(
+            (scan) => scan.scannerId === user.id && scan.scannedId !== user.id
+          )
+        )
+      );
+
+      const filteredScansSpeakers = filteredScans.filter((scan) =>
+        allSpeakerIds.includes(scan.scannedId)
+      );
+
       const points =
-        scanned.length - scannedSpeakers.length + scannedSpeakers.length * 2;
+        filteredScans.length -
+        filteredScansSpeakers.length +
+        filteredScansSpeakers.length * 2;
 
       return {
         ...user,

@@ -155,7 +155,6 @@ export default function QRScanner() {
           )}
           {state.error && <ErrorNotification>{state.error}</ErrorNotification>}
         </div>
-        <h1>{state.currentState}</h1>
         {targetUser && (
           <div className="m-2 mt-auto p-2 rounded-md border border-slate-400 dark:border-slate-700">
             <div className="flex gap-1 items-center">

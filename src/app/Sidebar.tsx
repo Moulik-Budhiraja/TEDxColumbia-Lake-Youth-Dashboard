@@ -68,13 +68,15 @@ export default function Sidebar() {
                   text="Home"
                 ></SidebarItem>
               </Link>
-              {/* <Link href={"/networking"} onClick={() => setOpen(false)}>
-                <SidebarItem
-                  fadeIn={fadeIn}
-                  icon={<IconNetworking className="fill-tedx-white" />}
-                  text="Networking"
-                ></SidebarItem>
-              </Link> */}
+              {showTicket && (
+                <Link href={"/networking"} onClick={() => setOpen(false)}>
+                  <SidebarItem
+                    fadeIn={fadeIn}
+                    icon={<IconNetworking className="fill-tedx-white" />}
+                    text="Networking"
+                  ></SidebarItem>
+                </Link>
+              )}
               {showTicket && (
                 <Link href={"/ticket"} onClick={() => setOpen(false)}>
                   <SidebarItem

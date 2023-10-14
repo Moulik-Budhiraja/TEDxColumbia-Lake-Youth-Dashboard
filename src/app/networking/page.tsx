@@ -43,34 +43,24 @@ export default async function Networking() {
 
   const allPoints = allUsers
     .map((user) => {
-      const scanned = Array.from(
+      const uniqueScans = Array.from(
         new Set(
-          allScans.filter(
-            (scan) => scan.scannerId === user.id && scan.scannedId !== user.id
-          )
+          allScans
+            .filter(
+              (scan) => scan.scannerId === user.id && scan.scannedId !== user.id
+            )
+            .map((scan) => scan.scannedId) // Get the IDs of scanned users.
         )
       );
 
-      const scannedSpeakers = scanned.filter((scan) =>
-        allSpeakerIds.includes(scan.scannedId)
-      );
-
-      const filteredScans = Array.from(
-        new Set(
-          allScans.filter(
-            (scan) => scan.scannerId === user.id && scan.scannedId !== user.id
-          )
-        )
-      );
-
-      const filteredScansSpeakers = filteredScans.filter((scan) =>
-        allSpeakerIds.includes(scan.scannedId)
+      const uniqueSpeakerScans = uniqueScans.filter((id) =>
+        allSpeakerIds.includes(id)
       );
 
       const points =
-        filteredScans.length -
-        filteredScansSpeakers.length +
-        filteredScansSpeakers.length * 2;
+        uniqueScans.length -
+        uniqueSpeakerScans.length +
+        uniqueSpeakerScans.length * 2;
 
       return {
         ...user,
@@ -80,15 +70,14 @@ export default async function Networking() {
     .sort((a, b) => b.points - a.points)
     .slice(0, 10);
 
-  const points =
-    scanned.length - scannedSpeakers.length + scannedSpeakers.length * 2;
+  // Now for the individual user points
+  const scannedIds = new Set(scanned.map((scan) => scan.scannedId));
+  const scannedSpeakersIds = new Set(
+    scannedSpeakers.map((scan) => scan.scannedId)
+  );
 
-  const scannedUsers = allUsers.filter((user) =>
-    scanned.map((scan) => scan.scannedId).includes(user.id)
-  );
-  const scannedByUsers = allUsers.filter((user) =>
-    scannedBy.map((scan) => scan.scannerId).includes(user.id)
-  );
+  const userPoints =
+    scannedIds.size - scannedSpeakersIds.size + scannedSpeakersIds.size * 2;
 
   return (
     <div className="h-screen">

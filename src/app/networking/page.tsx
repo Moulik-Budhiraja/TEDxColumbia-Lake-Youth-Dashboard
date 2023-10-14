@@ -76,7 +76,7 @@ export default async function Networking() {
     scannedSpeakers.map((scan) => scan.scannedId)
   );
 
-  const userPoints =
+  const points =
     scannedIds.size - scannedSpeakersIds.size + scannedSpeakersIds.size * 2;
 
   return (

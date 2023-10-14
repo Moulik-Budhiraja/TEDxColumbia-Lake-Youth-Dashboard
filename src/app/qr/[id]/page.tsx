@@ -1,5 +1,6 @@
 import Header from "@/components/Header/Header";
 import { prisma } from "@/db";
+import { requirePermission } from "@/serverFunctions/user/requirePermission";
 import { Jwt } from "@/types/jwtTypes";
 import jwt from "jsonwebtoken";
 import { notFound, redirect } from "next/navigation";
@@ -11,14 +12,17 @@ type QrProps = {
 };
 
 export default async function Qr({ params }: QrProps) {
+  const scanner = await requirePermission("attendee");
   const state = {
     valid: true,
     id: "",
   };
 
+  console.log("d8afa27c-4d83-49ac-b3ca-ab1865e006d9");
+
   const user = await prisma.user.findUnique({
     where: {
-      id: params.id,
+      qr: params.id,
     },
   });
 
@@ -26,9 +30,16 @@ export default async function Qr({ params }: QrProps) {
     return notFound();
   }
 
-  const targetURL = `${process.env.NEXT_PUBLIC_URL}/profile/${user.firstName
+  const targetURL = `/profile/${user?.firstName
     .toLowerCase()
-    .replace(/ /g, "-")}-${user.lastName.toLowerCase().replace(/ /g, "-")}`;
+    .replace(/ /g, "-")}-${user?.lastName.toLowerCase().replace(/ /g, "-")}`;
+
+  await prisma.scans.create({
+    data: {
+      scannerId: scanner.id,
+      scannedId: user.id,
+    },
+  });
 
   return redirect(targetURL);
 

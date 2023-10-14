@@ -2,6 +2,7 @@ import Header from "@/components/Header/Header";
 import { prisma } from "@/db";
 import { Jwt } from "@/types/jwtTypes";
 import jwt from "jsonwebtoken";
+import { notFound, redirect } from "next/navigation";
 
 type QrProps = {
   params: {
@@ -14,6 +15,22 @@ export default async function Qr({ params }: QrProps) {
     valid: true,
     id: "",
   };
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: params.id,
+    },
+  });
+
+  if (!user) {
+    return notFound();
+  }
+
+  const targetURL = `${process.env.NEXT_PUBLIC_URL}/profile/${user.firstName
+    .toLowerCase()
+    .replace(/ /g, "-")}-${user.lastName.toLowerCase().replace(/ /g, "-")}`;
+
+  return redirect(targetURL);
 
   return (
     <div className="h-screen">
